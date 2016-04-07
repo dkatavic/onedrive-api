@@ -1,0 +1,23 @@
+{
+  "name": "onedrive-api",
+  "version": "0.0.1",
+  "description": "OneDrive module for communicating with oneDrive API. Built using functional programming pattern",
+  "main": "index.js",
+  "scripts": {
+    "test": "NODE_ENV=test mocha ./test/bootstrap.test.js ./test/unit/**/*.test.js"
+  },
+  "keywords": [
+    "onedrive"
+  ],
+  "author": "Domagoj Katavic",
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.70.0",
+    "request-promise": "^2.0.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "faker": "^3.1.0",
+    "mocha": "^2.4.5"
+  }
+}
