@@ -1,5 +1,5 @@
 // index.js
 
-var api = require('./lib/index');
+var api = require('./lib');
 
 module.exports = api;
