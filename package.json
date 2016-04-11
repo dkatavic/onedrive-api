@@ -18,6 +18,9 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "faker": "^3.1.0",
-    "mocha": "^2.4.5"
+    "install": "0.6.1",
+    "mocha": "^2.4.5",
+    "npm": "3.8.6",
+    "string-stream": "0.0.7"
   }
 }
