@@ -24,7 +24,7 @@ describe("uploadSimple", function(){
       done();
     }).catch(errorHandler(done));
     
-  })
+  });
   
   it("Should upload Simple file using Stream", function(done){
     
@@ -43,8 +43,6 @@ describe("uploadSimple", function(){
       done();
     }).catch(errorHandler(done));
     
-  })
-  
-  
+  });
   
 });
