@@ -17,7 +17,7 @@ describe('listChildren', function(){
       });
       done();
       
-    }).catch(done);
+    }).catch(errorHandler(done));
     
   });
   
