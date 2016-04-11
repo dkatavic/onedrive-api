@@ -15,10 +15,10 @@ npm install onedrive-api
 
   - [createFolder](#createFolder)
   - [delete](#delete)
-  - [download](#readablepipedestbuffer)
-  - [listChildren](#readablepipedestbuffer)
-  - [update](#readablepipedestbuffer)
-  - [uploadSimple](#readablepipedestbuffer)
+  - [download](#download)
+  - [listChildren](#listChildren)
+  - [update](#update)
+  - [uploadSimple](#uploadSimple)
 
 # Examples
   
