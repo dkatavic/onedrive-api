@@ -1,19 +1,28 @@
 // uploadSimple.test.js
 
 var faker = require('faker'),
-    stringStream = require('string-stream'),
-    fs = require('fs');
+    stringStream = require('string-stream');
 
 describe("uploadSimple", function(){
   
-  var filename, readableStream, fileContent;
+  var filename, readableStream, fileContent, createdFile;
   
   before(function(){
     
     filename = "test-uploadSimple-" + faker.random.word();
     fileContent = faker.lorem.paragraphs();
     readableStream = new stringStream(fileContent);
-    //readableStream = fs.createReadStream('./sample.txt');
+    
+  });
+  
+  after(function(done){
+    
+    oneDrive.items.delete({
+      accessToken: accessToken,
+      itemId: createdFile.id
+    }).then(function(_item){
+      done();
+    }).catch(errorHandler(done));
     
   })
   
@@ -24,12 +33,13 @@ describe("uploadSimple", function(){
       filename: filename,
       readableStream: readableStream
     }).then(function(item){
-      console.log(item);
+      
       expect(item.id).to.be.a('String');
       expect(item.name).to.be.a('String');
       expect(item.size).to.be.a('Number');
       expect(item.size).to.be.at.least(1);
       expect(item.id).to.be.a('String');
+      createdFile = item;
       done();
     }).catch(errorHandler(done));
     
