@@ -73,10 +73,11 @@ Download item content
 **Returns**: <code>Object</code> - Readable stream with item's content  
 
 ```node
-oneDriveApi.items.delete({
+oneDriveApi.items.download({
   accessToken: accessToken,
   itemId: createdFolder.id
-}).then(() => {
+}).then((fileStream) => {
+fileStream.pipe(SomeWritableStream);
 })
 ```
 
@@ -106,7 +107,7 @@ Update item metadata
 **Params**: <code>Object</code> params  
 **Params**: <code>String</code> params.accessToken OneDrive access token  
 **Params**: <code>String</code> params.itemId Item id  
-**Params**: <code>Object</code> params.toUpdate Object to update  
+**Params**: <code>Object</code> params.toUpdate Object to update that corresponds to item's metadata  
 **Returns**: <code>Object</code> - Item object
 
 ```node
