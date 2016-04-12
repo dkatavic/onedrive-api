@@ -32,7 +32,7 @@ Create Folder
 **Params**: <code>String</code> params.name New folder name  
 **Returns**: <code>Object</code> - folder object  
 
-```node
+```javascript
 var oneDriveAPI = require('onedrive-api');
 
 oneDriveApi.items.createFolder({
@@ -55,7 +55,7 @@ Delete item (file or folder)
 **Returns**: <code>undefined</code>
 
 Delete item (file or folder)
-```node
+```javascript
 oneDriveApi.items.delete({
   accessToken: accessToken,
   itemId: createdFolder.id
@@ -72,11 +72,12 @@ Download item content
 **Params**: <code>String</code> params.itemId item id  
 **Returns**: <code>Object</code> - Readable stream with item's content  
 
-```node
-oneDriveApi.items.delete({
+```javascript
+oneDriveApi.items.download({
   accessToken: accessToken,
   itemId: createdFolder.id
-}).then(() => {
+}).then((fileStream) => {
+fileStream.pipe(SomeWritableStream);
 })
 ```
 
@@ -89,7 +90,7 @@ List childrens
 **Params**: <code>String</code> [params.itemId=root] Item id
 **Returns**: <code>Array</code> - object of children items
 
-```node
+```javascript
 oneDriveApi.items.listChildren({
   accessToken: accessToken,
   itemId: createdFolder.id
@@ -106,10 +107,10 @@ Update item metadata
 **Params**: <code>Object</code> params  
 **Params**: <code>String</code> params.accessToken OneDrive access token  
 **Params**: <code>String</code> params.itemId Item id  
-**Params**: <code>Object</code> params.toUpdate Object to update  
+**Params**: <code>Object</code> params.toUpdate Object to update that corresponds to item's metadata  
 **Returns**: <code>Object</code> - Item object
 
-```node
+```javascript
 oneDriveApi.items.update({
   accessToken: accessToken,
   itemId: createdFolder.id,
@@ -133,7 +134,7 @@ Create file with simple upload
 **Params**: <code>Object</code> params.readableStream Readable Stream with file's
 **Returns**: <code>Object</code> - Item  
 
-```node
+```javascript
 oneDriveApi.items.uploadSimple({
   accessToken: accessToken,
   filename: filename,
