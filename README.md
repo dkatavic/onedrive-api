@@ -13,13 +13,13 @@ npm install onedrive-api
 
 ### Items
 
-  - [createFolder](#items.createfolder)
-  - [delete](#items.delete)
-  - [download](#items.download)
-  - [getMetadata](#items.getmetadata)
-  - [listChildren](#items.listchildren)
-  - [update](#items.update)
-  - [uploadSimple](#items.uploadsimple)
+  - [createFolder](#itemscreatefolder)
+  - [delete](#itemsdelete)
+  - [download](#itemsdownload)
+  - [getMetadata](#itemsgetmetadata)
+  - [listChildren](#itemslistchildren)
+  - [update](#itemsupdate)
+  - [uploadSimple](#itemsuploadsimple)
 
 # Examples
   
