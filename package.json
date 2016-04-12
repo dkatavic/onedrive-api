@@ -1,15 +1,22 @@
 {
   "name": "onedrive-api",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "OneDrive module for communicating with oneDrive API. Built using functional programming pattern",
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha ./test/bootstrap.test.js ./test/unit/**/*.test.js"
   },
   "keywords": [
-    "onedrive"
+    "onedrive",
+    "api",
+    "rest",
+    "skydrive"
   ],
   "author": "Domagoj Katavic",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dkatavic/onedrive-api.git"
+  },
   "license": "MIT",
   "dependencies": {
     "is-empty-object": "^1.1.1",
