@@ -13,24 +13,28 @@ npm install onedrive-api
 
 ### Items
 
-  - [createFolder](#createfolder)
-  - [delete](#delete)
-  - [download](#download)
-  - [listChildren](#listchildren)
-  - [update](#update)
-  - [uploadSimple](#uploadsimple)
+  - [createFolder](#items.createfolder)
+  - [delete](#items.delete)
+  - [download](#items.download)
+  - [getMetadata](#items.getmetadata)
+  - [listChildren](#items.listchildren)
+  - [update](#items.update)
+  - [uploadSimple](#items.uploadsimple)
 
 # Examples
   
-### createFolder
+### items.createFolder
 
 Create Folder
 
-**Params**: <code>Object</code> params  
-**Params**: <code>String</code> params.accessToken OneDrive access token  
-**Params**: <code>String</code> [params.itemId=root] Item id  
-**Params**: <code>String</code> params.name New folder name  
 **Returns**: <code>Object</code> - folder object  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>Object</code> |  |  |
+| params.accessToken | <code>String</code> |  | OneDrive access token |
+| [params.itemId] | <code>String</code> | <code>root</code> | Item id |
+| params.name | <code>String</code> |  | New folder name |
 
 ```javascript
 var oneDriveAPI = require('onedrive-api');
@@ -45,14 +49,17 @@ oneDriveApi.items.createFolder({
 })
 ```
 
-### delete
+### items.delete
 
 Delete item (file or folder)
 
-**Params**: <code>Object</code> params  
-**Params**: <code>String</code> params.accessToken OneDrive access token  
-**Params**: <code>String</code> params.itemId Item id  
-**Returns**: <code>undefined</code>
+**Returns**: <code>undefined</code> - (204 No content)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>Object</code> |  |
+| params.accessToken | <code>String</code> | OneDrive access token |
+| params.itemId | <code>String</code> | Item id |
 
 Delete item (file or folder)
 ```javascript
@@ -63,32 +70,60 @@ oneDriveApi.items.delete({
 })
 ```
 
-### download
+### items.download
 
 Download item content
 
-**Params**: <code>Object</code> params  
-**Params**: <code>String</code> params.accessToken OneDrive access token  
-**Params**: <code>String</code> params.itemId item id  
 **Returns**: <code>Object</code> - Readable stream with item's content  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>Object</code> |  |
+| params.accessToken | <code>String</code> | OneDrive access token |
+| params.itemId | <code>String</code> | item id |  
 
 ```javascript
 oneDriveApi.items.download({
   accessToken: accessToken,
   itemId: createdFolder.id
 }).then((fileStream) => {
-fileStream.pipe(SomeWritableStream);
+  fileStream.pipe(SomeWritableStream);
 })
 ```
 
-### listChildren
+### items.getMetadata
+
+Get items metadata (file or folder)
+
+**Returns**: <code>Object</code> - Item's metadata  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>Object</code> |  |
+| params.accessToken | <code>String</code> | OneDrive access token |
+| params.itemId | <code>String</code> | Item id |
+
+```javascript
+oneDriveApi.items.getMetadata({
+  accessToken: accessToken,
+  itemId: createdFolder.id
+}).then((item) => {
+  // console.log(item);
+  // returns body of https://dev.onedrive.com/items/update.htm#response
+})
+```
+
+### items.listChildren
 
 List childrens
 
-**Params**: <code>Object</code> params  
-**Params**: <code>String</code> params.accessToken OneDrive access token  
-**Params**: <code>String</code> [params.itemId=root] Item id
-**Returns**: <code>Array</code> - object of children items
+**Returns**: <code>Array</code> - object of children items  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>Object</code> |  |  |
+| params.accessToken | <code>String</code> |  | OneDrive access token |
+| [params.itemId] | <code>String</code> | <code>root</code> | Item id |
 
 ```javascript
 oneDriveApi.items.listChildren({
@@ -100,15 +135,18 @@ oneDriveApi.items.listChildren({
 })
 ```
 
-### update
+### items.update
 
 Update item metadata
 
-**Params**: <code>Object</code> params  
-**Params**: <code>String</code> params.accessToken OneDrive access token  
-**Params**: <code>String</code> params.itemId Item id  
-**Params**: <code>Object</code> params.toUpdate Object to update that corresponds to item's metadata  
-**Returns**: <code>Object</code> - Item object
+**Returns**: <code>Object</code> - Item object  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>Object</code> |  |
+| params.accessToken | <code>String</code> | OneDrive access token |
+| params.itemId | <code>String</code> | Item id |
+| params.toUpdate | <code>Object</code> | Object to update |
 
 ```javascript
 oneDriveApi.items.update({
@@ -123,16 +161,19 @@ oneDriveApi.items.update({
 })
 ```
 
-### uploadSimple
+### items.uploadSimple
 
 Create file with simple upload
 
-**Params**: <code>Object</code> params  
-**Params**: <code>String</code> params.accessToken OneDrive access token  
-**Params**: <code>String</code> params.filename File name  
-**Params**: <code>String</code> [params.parentId=root] Parent id  
-**Params**: <code>Object</code> params.readableStream Readable Stream with file's
 **Returns**: <code>Object</code> - Item  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>Object</code> |  |  |
+| params.accessToken | <code>String</code> |  | OneDrive access token |
+| params.filename | <code>String</code> |  | File name |
+| [params.parentId] | <code>String</code> | <code>root</code> | Parent id |
+| params.readableStream | <code>Object</code> |  | Readable Stream with file's content | 
 
 ```javascript
 oneDriveApi.items.uploadSimple({
