@@ -39,7 +39,7 @@ Create Folder
 | --- | --- | --- | --- |
 | params | <code>Object</code> |  |  |
 | params.accessToken | <code>String</code> |  | OneDrive access token |
-| [params.itemId] | <code>String</code> | <code>root</code> | Item id |
+| [params.rootItemId] | <code>String</code> | <code>root</code> | Item id |
 | params.name | <code>String</code> |  | New folder name |
 
 
