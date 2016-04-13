@@ -89,12 +89,11 @@ Download item content
 | params.itemId | <code>String</code> | item id |  
 
 ```javascript
-oneDriveAPI.items.download({
+var fileStream = oneDriveAPI.items.download({
   accessToken: accessToken,
   itemId: createdFolder.id
-}).then((fileStream) => {
-  fileStream.pipe(SomeWritableStream);
-})
+});
+fileStream.pipe(SomeWritableStream);
 ```
 
 ### items.getMetadata
