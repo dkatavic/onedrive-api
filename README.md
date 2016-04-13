@@ -22,6 +22,12 @@ npm install onedrive-api
   - [uploadSimple](#itemsuploadsimple)
 
 # Examples
+
+### Require module
+
+```javascript
+var oneDriveAPI = require('onedrive-api');
+```
   
 ### items.createFolder
 
@@ -38,9 +44,7 @@ Create Folder
 
 
 ```javascript
-var oneDriveAPI = require('onedrive-api');
-
-oneDriveApi.items.createFolder({
+oneDriveAPI.items.createFolder({
   accessToken: accessToken,
   rootItemId: "root",
   name: "Folder name"
@@ -64,7 +68,7 @@ Delete item (file or folder)
 
 
 ```javascript
-oneDriveApi.items.delete({
+oneDriveAPI.items.delete({
   accessToken: accessToken,
   itemId: createdFolder.id
 }).then(() => {
@@ -85,7 +89,7 @@ Download item content
 | params.itemId | <code>String</code> | item id |  
 
 ```javascript
-oneDriveApi.items.download({
+oneDriveAPI.items.download({
   accessToken: accessToken,
   itemId: createdFolder.id
 }).then((fileStream) => {
@@ -107,7 +111,7 @@ Get items metadata (file or folder)
 
 
 ```javascript
-oneDriveApi.items.getMetadata({
+oneDriveAPI.items.getMetadata({
   accessToken: accessToken,
   itemId: createdFolder.id
 }).then((item) => {
@@ -130,7 +134,7 @@ List childrens
 
 
 ```javascript
-oneDriveApi.items.listChildren({
+oneDriveAPI.items.listChildren({
   accessToken: accessToken,
   itemId: createdFolder.id
 }).then((childrens) => {
@@ -154,7 +158,7 @@ Update item metadata
 
 
 ```javascript
-oneDriveApi.items.update({
+oneDriveAPI.items.update({
   accessToken: accessToken,
   itemId: createdFolder.id,
   toUpdate: {
@@ -182,7 +186,7 @@ Create file with simple upload
 
 
 ```javascript
-oneDriveApi.items.uploadSimple({
+oneDriveAPI.items.uploadSimple({
   accessToken: accessToken,
   filename: filename,
   readableStream: readableStream
