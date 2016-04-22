@@ -1,5 +1,4 @@
-var config = require('../config'),
-    oneDrive = require('../index'),
+var oneDrive = require('../index'),
     mocha = require('mocha'),
     chai = require('chai'),
     credentials = require('./credentials');
@@ -7,7 +6,6 @@ var config = require('../config'),
 
 //set globals
 global.accessToken = credentials.accessToken;
-global.appConfig = config;
 global.oneDrive = oneDrive;
 global.mocha = mocha;
 global.expect = chai.expect;
