@@ -181,6 +181,7 @@ Create file with simple upload
 | params.accessToken | <code>String</code> |  | OneDrive access token |
 | params.filename | <code>String</code> |  | File name |
 | [params.parentId] | <code>String</code> | <code>root</code> | Parent id |
+| [params.parentPath] | <code>String</code> |  | Parent path (if parentPath is defined, than parentId is ignored) |
 | params.readableStream | <code>Object</code> |  | Readable Stream with file's content | 
 
 
