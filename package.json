@@ -21,7 +21,8 @@
   "dependencies": {
     "is-empty-object": "^1.1.1",
     "request": "^2.70.0",
-    "request-promise": "^2.0.1"
+    "request-promise": "^2.0.1",
+    "async": "2.5.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
