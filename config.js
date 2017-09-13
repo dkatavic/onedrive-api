@@ -1,5 +1,5 @@
 module.exports = {
 
-  apiUrl: "https://graph.microsoft.com/v1.0/drive/"
+  apiUrl: "https://graph.microsoft.com/v1.0/"
 
 }
