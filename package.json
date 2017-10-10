@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "npm run test:unit",
-    "test:e2e": "NODE_ENV=test mocha ./test/e2e/bootstrap.test.js ./test/e2e/**/*.test.js",
+    "test:e2e": "NODE_ENV=test mocha --opts ./test/e2e/mocha.opts ./test/e2e/bootstrap.test.js ./test/e2e/**/*.test.js",
     "test:unit": "NODE_ENV=test mocha ./test/unit/*.test.js"
   },
   "keywords": [
@@ -29,7 +29,7 @@
     "chai": "^3.5.0",
     "faker": "^3.1.0",
     "install": "0.6.1",
-    "mocha": "^2.4.5",
+    "mocha": "^2.5.3",
     "npm": "3.8.6",
     "string-stream": "0.0.7"
   }
