@@ -1,4 +1,7 @@
 # onedrive-api
+
+[![CircleCI](https://circleci.com/gh/dkatavic/onedrive-api/tree/master.svg?style=svg&circle-token=0410ac864820f55930f276a46fa955a788b03eee)](https://circleci.com/gh/dkatavic/onedrive-api/tree/master)
+
 OneDrive API module for Node.js. It's built with pure functional programing, there are no unnecessary objects.
 
 It's built for internal project so it supports only basic CRUD operations needed for project (for now). I will accept any pull requests.
