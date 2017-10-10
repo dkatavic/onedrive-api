@@ -1,10 +1,12 @@
 {
   "name": "onedrive-api",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "OneDrive module for communicating with oneDrive API. Built using functional programming pattern",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha ./test/bootstrap.test.js ./test/unit/**/*.test.js"
+    "test": "npm run test:unit",
+    "test:e2e": "NODE_ENV=test mocha ./test/e2e/bootstrap.test.js ./test/e2e/**/*.test.js",
+    "test:unit": "NODE_ENV=test mocha ./test/unit/*.test.js"
   },
   "keywords": [
     "onedrive",
