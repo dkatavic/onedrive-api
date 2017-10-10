@@ -1,7 +1,7 @@
-var oneDrive = require('../index'),
-    mocha = require('mocha'),
-    chai = require('chai'),
-    credentials = require('./credentials');
+var oneDrive = require('../../lib/index'),
+  mocha = require('mocha'),
+  chai = require('chai'),
+  credentials = require('./credentials');
 
 
 //set globals
@@ -11,8 +11,8 @@ global.mocha = mocha;
 global.expect = chai.expect;
 
 // global errorHandler that ensures that whole error is logged, not just [object Object]
-global.errorHandler = function(done){
-  return function(err) {
+global.errorHandler = function (done) {
+  return function (err) {
     console.error(err);
     done(err);
   }
