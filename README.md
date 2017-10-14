@@ -6,10 +6,6 @@ OneDrive API module for Node.js. It's built with pure functional programing, the
 
 It's built for internal project so it supports only basic CRUD operations needed for project (for now). I will accept any pull requests.
 
-### Breaking change from 0.1
-
-- Since version 0.1 this repo is using `graph.microsoft.com` API instead of `api.onedrive.com` to support enterprise accounts too. You should verify that you are authorizing against `graph.microsoft.com`. All of the API's are working indentically
-
 # Install
 
 ```sh
@@ -203,3 +199,4 @@ oneDriveAPI.items.uploadSimple({
 })
 ```
 
+## [Changelog](./CHANGELOG.md)
