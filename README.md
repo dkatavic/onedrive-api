@@ -44,6 +44,8 @@ Create Folder
 | params.accessToken | <code>String</code> |  | OneDrive access token |
 | [params.rootItemId] | <code>String</code> | <code>root</code> | Item id |
 | params.name | <code>String</code> |  | New folder name |
+| params.shared | <code>Boolean</code> | <code>false</code> | A flag to indicated whether this files is owned by the user or shared from another user. If true params.user has to be set. |
+| params.user | <code>String</code> |  | The user who shared the file. Must be set if params.shared is true. |
 
 
 ```javascript
