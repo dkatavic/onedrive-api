@@ -32,6 +32,25 @@ npm install onedrive-api
 var oneDriveAPI = require('onedrive-api');
 ```
   
+Since version 0.2.0 this npm module supports accessing shared files. Simply provide the parameter shared as true along
+with the user, who originally owns the files. Keep in mind, that in order to access the files the access token requires 
+certain scopes (e.g. files.read.all). See the following snippet:
+
+```javascript
+oneDriveAPI.items.listChildren({
+    accessToken: accessToken,
+    itemId: 'root',
+    shared: true,
+    user: 'dkatavic'
+  }).then((childrens) => {
+  // list all children of dkatavics root directory  
+  //
+  // console.log(childrens);
+  // returns body of https://dev.onedrive.com/items/list.htm#response
+  })
+```
+
+  
 ### items.createFolder
 
 Create Folder
@@ -70,6 +89,8 @@ Delete item (file or folder)
 | params | <code>Object</code> |  |
 | params.accessToken | <code>String</code> | OneDrive access token |
 | params.itemId | <code>String</code> | Item id |
+| params.shared | <code>Boolean</code> | <code>false</code> | A flag to indicated whether this files is owned by the user or shared from another user. If true params.user has to be set. |
+| params.user | <code>String</code> |  | The user who shared the file. Must be set if params.shared is true. |
 
 
 ```javascript
@@ -92,6 +113,8 @@ Download item content
 | params | <code>Object</code> |  |
 | params.accessToken | <code>String</code> | OneDrive access token |
 | params.itemId | <code>String</code> | item id |  
+| params.shared | <code>Boolean</code> | <code>false</code> | A flag to indicated whether this files is owned by the user or shared from another user. If true params.user has to be set. |
+| params.user | <code>String</code> |  | The user who shared the file. Must be set if params.shared is true. |
 
 ```javascript
 var fileStream = oneDriveAPI.items.download({
@@ -112,6 +135,8 @@ Get items metadata (file or folder)
 | params | <code>Object</code> |  |
 | params.accessToken | <code>String</code> | OneDrive access token |
 | params.itemId | <code>String</code> | Item id |
+| params.shared | <code>Boolean</code> | <code>false</code> | A flag to indicated whether this files is owned by the user or shared from another user. If true params.user has to be set. |
+| params.user | <code>String</code> |  | The user who shared the file. Must be set if params.shared is true. |
 
 
 ```javascript
@@ -135,6 +160,8 @@ List childrens
 | params | <code>Object</code> |  |  |
 | params.accessToken | <code>String</code> |  | OneDrive access token |
 | [params.itemId] | <code>String</code> | <code>root</code> | Item id |
+| params.shared | <code>Boolean</code> | <code>false</code> | A flag to indicated whether this files is owned by the user or shared from another user. If true params.user has to be set. |
+| params.user | <code>String</code> |  | The user who shared the file. Must be set if params.shared is true. |
 
 
 ```javascript
@@ -159,6 +186,8 @@ Update item metadata
 | params.accessToken | <code>String</code> | OneDrive access token |
 | params.itemId | <code>String</code> | Item id |
 | params.toUpdate | <code>Object</code> | Object to update |
+| params.shared | <code>Boolean</code> | <code>false</code> | A flag to indicated whether this files is owned by the user or shared from another user. If true params.user has to be set. |
+| params.user | <code>String</code> |  | The user who shared the file. Must be set if params.shared is true. |
 
 
 ```javascript
@@ -188,6 +217,8 @@ Create file with simple upload
 | [params.parentId] | <code>String</code> | <code>root</code> | Parent id |
 | [params.parentPath] | <code>String</code> |  | Parent path (if parentPath is defined, than parentId is ignored) |
 | params.readableStream | <code>Object</code> |  | Readable Stream with file's content | 
+| params.shared | <code>Boolean</code> | <code>false</code> | A flag to indicated whether this files is owned by the user or shared from another user. If true params.user has to be set. |
+| params.user | <code>String</code> |  | The user who shared the file. Must be set if params.shared is true. |
 
 
 ```javascript
