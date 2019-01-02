@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.2.1]
 
-- Updated Documentation
+- Resolved package vulnerabilities
 
 ## [0.2.0]
 ### Added
