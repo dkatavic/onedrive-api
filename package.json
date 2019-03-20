@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "npm run test:unit",
-    "test:e2e": "NODE_ENV=test mocha --opts ./test/e2e/mocha.opts ./test/e2e/bootstrap.test.js ./test/e2e/**/*.test.js",
+    "test:e2e": "NODE_ENV=test mocha --opts ./test/e2e/mocha.opts ./test/e2e/bootstrap.test.js ./test/e2e/items/uploadSession.test.js",
     "test:unit": "NODE_ENV=test mocha ./test/unit/*.test.js",
     "release:tag": "git tag $npm_package_version && git push --tags"
   },
@@ -31,6 +31,7 @@
     "faker": "^3.1.0",
     "install": "0.6.1",
     "mocha": "^5.2.0",
-    "string-stream": "0.0.7"
+    "string-stream": "0.0.7",
+    "string-to-stream": "^1.1.1"
   }
 }
