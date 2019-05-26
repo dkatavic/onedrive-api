@@ -159,4 +159,68 @@ describe("uploadSession", function () {
 
   })
 
+  describe("Should upload Session 1kb file inside a folder using parentPath", function () {
+
+    var filename, readableStream, fileContent, folderName, createdFolder;
+
+    before(function (done) {
+      filename = "test-uploadSession-" + faker.random.word();
+      fileContent = "a".repeat(1 * 1024);
+      readableStream = new stringStream(fileContent);
+      folderName = "test-uploadSessionFolder-" + faker.random.word();
+
+      oneDrive.items
+        .createFolder({
+          accessToken: accessToken,
+          rootItemId: "root",
+          name: folderName
+        })
+        .then(function (folder) {
+          createdFolder = folder;
+          done();
+        })
+        .catch(done);
+    });
+
+    it("Should upload Session 1kb file inside a folder using parentPath", function (done) {
+      oneDrive.items
+        .uploadSession({
+          accessToken: accessToken,
+          filename: filename,
+          readableStream: readableStream,
+          fileSize: fileContent.length,
+          parentPath: folderName
+        })
+        .then(function (item) {
+          expect(item.id).to.be.a("String");
+          expect(item.name).to.be.a("String");
+          expect(item.size).to.be.a("Number");
+          expect(item.size).to.be.at.least(1);
+          expect(item.id).to.be.a("String");
+          createdFile = item;
+          done();
+        })
+        .catch(err => {
+          console.error(err)
+          errorHandler(done);
+        });
+    });
+
+    after(function (done) {
+
+      oneDrive.items.delete({
+        accessToken: accessToken,
+        itemId: createdFile.id
+      }).then(function () {
+        return oneDrive.items.delete({
+          accessToken: accessToken,
+          itemId: createdFolder.id
+        });
+      }).then(function (_folder) {
+        done();
+      }).catch(errorHandler(done));
+
+    });
+
+  })
 });
