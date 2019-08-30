@@ -233,35 +233,6 @@ oneDriveAPI.items.uploadSimple({
 })
 ```
 
-### items.uploadSimple
-
-Create file with simple upload
-
-**Returns**: <code>Object</code> - Item
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>Object</code> |  |  |
-| params.accessToken | <code>String</code> |  | OneDrive access token |
-| params.filename | <code>String</code> |  | File name |
-| [params.parentId] | <code>String</code> | <code>root</code> | Parent id |
-| [params.parentPath] | <code>String</code> |  | Parent path (if parentPath is defined, than parentId is ignored) |
-| params.readableStream | <code>Object</code> |  | Readable Stream with file's content |
-| params.shared | <code>Boolean</code> | <code>false</code> | A flag to indicated whether this files is owned by the user or shared from another user. If true params.user has to be set. |
-| params.user | <code>String</code> |  | The user who shared the file. Must be set if params.shared is true. |
-
-
-```javascript
-oneDriveAPI.items.uploadSimple({
-  accessToken: accessToken,
-  filename: filename,
-  readableStream: readableStream
-}).then((item) => {
-// console.log(item);
-// returns body of https://dev.onedrive.com/items/upload_put.htm#response
-})
-```
-
 ### items.uploadSession
 
 Create file with session upload. Use this for the files over 4MB. This is a synchronous wrapper around asynchronous method, which means that on the failed upload you can't resume the upload but need to retry the implementation. I am accepting PRs for asynchronous implementation
