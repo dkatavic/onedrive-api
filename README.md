@@ -169,7 +169,8 @@ List childrens
 ```javascript
 oneDriveAPI.items.listChildren({
   accessToken: accessToken,
-  itemId: createdFolder.id
+  itemId: createdFolder.id,
+  query: '?$filter=createdDateTime le 2020-07-07T12:56:51.577Z'
 }).then((childrens) => {
 // console.log(childrens);
 // returns body of https://dev.onedrive.com/items/list.htm#response
