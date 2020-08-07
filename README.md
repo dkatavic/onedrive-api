@@ -22,6 +22,7 @@ npm install onedrive-api
   - [getMetadata](#itemsgetmetadata)
   - [listChildren](#itemslistchildren)
   - [update](#itemsupdate)
+  - [sync](#itemssync)
   - [uploadSimple](#itemsuploadsimple)
   - [uploadSession](#itemsuploadsession)
 
@@ -123,6 +124,29 @@ var fileStream = oneDriveAPI.items.download({
   itemId: createdFolder.id
 });
 fileStream.pipe(SomeWritableStream);
+```
+
+### items.sync
+
+Sync changes
+
+**Returns**: <code>Array</code> - Changes since last sync
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>Object</code> |  |
+| params.accessToken | <code>String</code> | OneDrive access token |
+| params.next | <code>String</code> | nextLink (or deltaLink returned from last session). |
+
+```javascript
+oneDriveAPI.items.sync({
+  accessToken: accessToken,
+  next: 'https://graph.microsoft.com/v1.0/me/drive/delta(token=1230919asd190410jlka)'
+}).then((item) => {
+  // console.log(item);
+  // returns body of https://docs.microsoft.com/nb-no/onedrive/developer/rest-api/api/driveitem_delta?view=odsp-graph-online#response
+})
 ```
 
 ### items.getMetadata
