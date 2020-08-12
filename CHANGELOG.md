@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.4.0]
+
+- Added progress callback to uploadSession
+- Added option to use any drive (me, users, groups, drives, sites)
+- Added option to call custom endpoints. Ex. '/groups/{groupId}/drives'
+
 ## [0.3.2]
 
 - Added sync endpoint

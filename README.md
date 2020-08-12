@@ -23,6 +23,7 @@ npm install onedrive-api
   - [listChildren](#itemslistchildren)
   - [update](#itemsupdate)
   - [sync](#itemssync)
+  - [customEndpoint](#itemscustom)
   - [uploadSimple](#itemsuploadsimple)
   - [uploadSession](#itemsuploadsession)
 
@@ -34,18 +35,14 @@ npm install onedrive-api
 var oneDriveAPI = require('onedrive-api');
 ```
 
-Since version 0.2.0 this npm module supports accessing shared files. Simply provide the parameter shared as true along
-with the user, who originally owns the files. Keep in mind, that in order to access the files the access token requires
-certain scopes (e.g. files.read.all). See the following snippet:
-
 ```javascript
 oneDriveAPI.items.listChildren({
     accessToken: accessToken,
     itemId: 'root',
-    shared: true,
-    user: 'dkatavic'
+    drive: 'me' // 'me' | 'user' | 'drive' | 'group' | 'site'
+    driveId: '' // BLANK | {user_id} | {drive_id} | {group_id} | {sharepoint_site_id}
   }).then((childrens) => {
-  // list all children of dkatavics root directory
+  // list all children of given root directory
   //
   // console.log(childrens);
   // returns body of https://dev.onedrive.com/items/list.htm#response
@@ -124,6 +121,32 @@ var fileStream = oneDriveAPI.items.download({
   itemId: createdFolder.id
 });
 fileStream.pipe(SomeWritableStream);
+```
+
+### items.custom
+
+Call custom endpoint
+
+**Returns**: <code>Object</code> - Readable stream with item's content
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>Object</code> |  |
+| params.accessToken | <code>String</code> | OneDrive access token |
+| params.url | <code>String</code> | Endpoint url. Ex. 'groups/{groupId}/drives' |
+| params.body | <code>Object</code> | <code>false</code> | Optional body |
+
+```javascript
+oneDriveAPI.items.customEndpoint({
+  accessToken: accessToken,
+  url: 'me/drive/special/cameraroll',
+  // body: {}
+}).then(r => {
+  console.log(r)
+}).catch(e => {
+  console.log(e)
+})
 ```
 
 ### items.sync
