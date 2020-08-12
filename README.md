@@ -306,6 +306,8 @@ oneDriveAPI.items.uploadSession({
   filename: filename,
   fileSize: fileSize,
   readableStream: readableStream
+}, (bytesUploaded) => {
+  console.log(bytesUploaded)
 }).then((item) => {
 // console.log(item);
 // returns body of https://docs.microsoft.com/en-us/onedrive/developer/rest-api/api/driveitem_createuploadsession?view=odsp-graph-online#http-response
