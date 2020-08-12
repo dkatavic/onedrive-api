@@ -23,7 +23,7 @@ npm install onedrive-api
   - [listChildren](#itemslistchildren)
   - [update](#itemsupdate)
   - [sync](#itemssync)
-  - [customEndpoint](#itemscustom)
+  - [customEndpoint](#itemscustomendpoint)
   - [uploadSimple](#itemsuploadsimple)
   - [uploadSession](#itemsuploadsession)
 
@@ -123,7 +123,7 @@ var fileStream = oneDriveAPI.items.download({
 fileStream.pipe(SomeWritableStream);
 ```
 
-### items.custom
+### items.customEndpoint
 
 Call custom endpoint
 
