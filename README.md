@@ -136,11 +136,13 @@ Call custom endpoint
 | params.accessToken | <code>String</code> | OneDrive access token |
 | params.url | <code>String</code> | Endpoint url. Ex. 'groups/{groupId}/drives' |
 | params.body | <code>Object</code> | <code>false</code> | Optional body |
+| params.method | <code>String</code> | Optional method |
 
 ```javascript
 oneDriveAPI.items.customEndpoint({
   accessToken: accessToken,
   url: 'me/drive/special/cameraroll',
+  // method: 'GET'
   // body: {}
 }).then(r => {
   console.log(r)
