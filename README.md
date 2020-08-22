@@ -19,6 +19,7 @@ npm install onedrive-api
   - [createFolder](#itemscreatefolder)
   - [delete](#itemsdelete)
   - [download](#itemsdownload)
+  - [partialDownload](#itemspartialdownload)
   - [getMetadata](#itemsgetmetadata)
   - [listChildren](#itemslistchildren)
   - [update](#itemsupdate)
@@ -39,7 +40,7 @@ var oneDriveAPI = require('onedrive-api');
 oneDriveAPI.items.listChildren({
     accessToken: accessToken,
     itemId: 'root',
-    drive: 'me' // 'me' | 'user' | 'drive' | 'group' | 'site'
+    drive: 'me', // 'me' | 'user' | 'drive' | 'group' | 'site'
     driveId: '' // BLANK | {user_id} | {drive_id} | {group_id} | {sharepoint_site_id}
   }).then((childrens) => {
   // list all children of given root directory
@@ -62,8 +63,8 @@ Create Folder
 | params.accessToken | <code>String</code> |  | OneDrive access token |
 | [params.rootItemId] | <code>String</code> | <code>root</code> | Item id |
 | params.name | <code>String</code> |  | New folder name |
-| params.shared | <code>Boolean</code> | <code>false</code> | A flag to indicated whether this files is owned by the user or shared from another user. If true params.user has to be set. |
-| params.user | <code>String</code> |  | The user who shared the file. Must be set if params.shared is true. |
+| params.drive | <code>String</code> | `'me'` | Only required if only `params.itemId` is set and `params.graphDownloadURL` is undefined. If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
 
 
 ```javascript
@@ -83,13 +84,13 @@ Delete item (file or folder)
 
 **Returns**: <code>undefined</code> - (204 No content)
 
-| Param | Type | Description |
-| --- | --- | --- |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
 | params | <code>Object</code> |  |
-| params.accessToken | <code>String</code> | OneDrive access token |
-| params.itemId | <code>String</code> | Item id |
-| params.shared | <code>Boolean</code> | <code>false</code> | A flag to indicated whether this files is owned by the user or shared from another user. If true params.user has to be set. |
-| params.user | <code>String</code> |  | The user who shared the file. Must be set if params.shared is true. |
+| params.accessToken | <code>String</code> |  | OneDrive access token |
+| params.itemId | <code>String</code> |  | Item id |
+| params.drive | <code>String</code> | `'me'` | Only required if only `params.itemId` is set and `params.graphDownloadURL` is undefined. If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
 
 
 ```javascript
@@ -107,18 +108,52 @@ Download item content
 **Returns**: <code>Object</code> - Readable stream with item's content
 
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>Object</code> |  |
-| params.accessToken | <code>String</code> | OneDrive access token |
-| params.itemId | <code>String</code> | item id |
-| params.shared | <code>Boolean</code> | <code>false</code> | A flag to indicated whether this files is owned by the user or shared from another user. If true params.user has to be set. |
-| params.user | <code>String</code> |  | The user who shared the file. Must be set if params.shared is true. |
+| Param | Type |  Default | Description |
+| --- | --- | --- | --- |
+| params | <code>Object</code> |  |  |
+| params.accessToken | <code>String</code> | | OneDrive access token |
+| params.itemId | <code>String</code> |  | item id |
+| params.drive | <code>String</code> | `'me'` | Only required if only `params.itemId` is set and `params.graphDownloadURL` is undefined. If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
 
 ```javascript
 var fileStream = oneDriveAPI.items.download({
   accessToken: accessToken,
   itemId: createdFolder.id
+});
+fileStream.pipe(SomeWritableStream);
+```
+
+### items.partialDownload
+
+Download item content partially. You must either provide `graphDownloadURL` or the `itemId` to download the file. 
+
+If only the `itemId` is provided, the function will try to get the download URL for you with additional `getMetadata()` function call.
+
+**Returns**: <code>Object</code> - Readable stream with item's content
+
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>Object</code> | |  |
+| params.accessToken | <code>String</code> | | OneDrive access token |
+| params.graphDownloadURL | <code>String</code> | | `@microsoft.graph.downloadUrl` of the item |
+| params.itemId | <code>String</code> |  | item id. This parameter will be skipped if `graphDownloadURL` is provided. |
+| params.bytesFrom | <code>Number</code> | `0` | Starting download byte. |
+| params.bytesTo | <code>Number</code> | | Ending byte to download. Must be set |
+| params.drive | <code>String</code> | `'me'` | Only required if only `params.itemId` is set and `params.graphDownloadURL` is undefined. If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
+
+```javascript
+var fileStream = oneDriveAPI.items.partialDownload({
+  accessToken: accessToken,
+  bytesFrom: 0, // start byte
+  bytesTo: 1034, // to byte
+  graphDownloadURL: createdItem['@microsoft.graph.downloadUrl'],
+  // optional params
+  itemId: createdItem.id, // only be used when `graphDownloadURL` is NOT provided
+  drive: 'me', // only be used when only `itemId` is provided
+  driveId: 'me' // only be required when `drive` is provided
 });
 fileStream.pipe(SomeWritableStream);
 ```
@@ -180,13 +215,13 @@ Get items metadata (file or folder)
 
 **Returns**: <code>Object</code> - Item's metadata
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>Object</code> |  |
-| params.accessToken | <code>String</code> | OneDrive access token |
-| params.itemId | <code>String</code> | Item id |
-| params.shared | <code>Boolean</code> | <code>false</code> | A flag to indicated whether this files is owned by the user or shared from another user. If true params.user has to be set. |
-| params.user | <code>String</code> |  | The user who shared the file. Must be set if params.shared is true. |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>Object</code> |   |  |
+| params.accessToken | <code>String</code> |  | OneDrive access token |
+| params.itemId | <code>String</code> |  | Item id |
+| params.drive | <code>String</code> | `'me'` | Only required if only `params.itemId` is set and `params.graphDownloadURL` is undefined. If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
 
 
 ```javascript
@@ -210,8 +245,8 @@ List childrens
 | params | <code>Object</code> |  |  |
 | params.accessToken | <code>String</code> |  | OneDrive access token |
 | [params.itemId] | <code>String</code> | <code>root</code> | Item id |
-| params.shared | <code>Boolean</code> | <code>false</code> | A flag to indicated whether this files is owned by the user or shared from another user. If true params.user has to be set. |
-| params.user | <code>String</code> |  | The user who shared the file. Must be set if params.shared is true. |
+| params.drive | <code>String</code> | `'me'` | Only required if only `params.itemId` is set and `params.graphDownloadURL` is undefined. If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
 
 
 ```javascript
@@ -230,14 +265,14 @@ Update item metadata
 
 **Returns**: <code>Object</code> - Item object
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>Object</code> |  |
-| params.accessToken | <code>String</code> | OneDrive access token |
-| params.itemId | <code>String</code> | Item id |
-| params.toUpdate | <code>Object</code> | Object to update |
-| params.shared | <code>Boolean</code> | <code>false</code> | A flag to indicated whether this files is owned by the user or shared from another user. If true params.user has to be set. |
-| params.user | <code>String</code> |  | The user who shared the file. Must be set if params.shared is true. |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>Object</code> |  |  |
+| params.accessToken | <code>String</code> |  | OneDrive access token |
+| params.itemId | <code>String</code> |  | Item id |
+| params.toUpdate | <code>Object</code> |  | Object to update |
+| params.drive | <code>String</code> | `'me'` | Only required if only `params.itemId` is set and `params.graphDownloadURL` is undefined. If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
 
 
 ```javascript
@@ -267,8 +302,8 @@ Create file with simple upload
 | [params.parentId] | <code>String</code> | <code>root</code> | Parent id |
 | [params.parentPath] | <code>String</code> |  | Parent path (if parentPath is defined, than parentId is ignored) |
 | params.readableStream | <code>Object</code> |  | Readable Stream with file's content |
-| params.shared | <code>Boolean</code> | <code>false</code> | A flag to indicated whether this files is owned by the user or shared from another user. If true params.user has to be set. |
-| params.user | <code>String</code> |  | The user who shared the file. Must be set if params.shared is true. |
+| params.drive | <code>String</code> | `'me'` | Only required if only `params.itemId` is set and `params.graphDownloadURL` is undefined. If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
 
 
 ```javascript
@@ -297,8 +332,8 @@ Create file with session upload. Use this for the files over 4MB. This is a sync
 | [params.parentId] | <code>String</code> | <code>root</code> | Parent id |
 | [params.parentPath] | <code>String</code> |  | Parent path (if parentPath is defined, than parentId is ignored) |
 | params.readableStream | <code>Object</code> |  | Readable Stream with file's content |
-| params.shared | <code>Boolean</code> | <code>false</code> | A flag to indicated whether this files is owned by the user or shared from another user. If true params.user has to be set. |
-| params.user | <code>String</code> |  | The user who shared the file. Must be set if params.shared is true. |
+| params.drive | <code>string</code> | `'me'` | Only required if only `params.itemId` is set and `params.graphDownloadURL` is undefined. If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
 | [params.chunksToUpload] | <code>Number</code> | <code>20</code> | Chunks to upload per request. More chunks per request requires more RAM |
 
 
