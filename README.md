@@ -130,7 +130,7 @@ Download item content partially. You must either provide `graphDownloadURL` or t
 
 If only the `itemId` is provided, the function will try to get the download URL for you with additional `getMetadata()` function call.
 
-**Returns**: <code>Object</code> - Readable stream with item's content
+**Returns**: <code>Promise</code> - A promise with the result is a `Readable stream` with partial item's content
 
 
 | Param | Type | Default | Description |
@@ -145,7 +145,7 @@ If only the `itemId` is provided, the function will try to get the download URL 
 | params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
 
 ```javascript
-var fileStream = oneDriveAPI.items.partialDownload({
+var partialPromise = oneDriveAPI.items.partialDownload({
   accessToken: accessToken,
   bytesFrom: 0, // start byte
   bytesTo: 1034, // to byte
@@ -155,7 +155,9 @@ var fileStream = oneDriveAPI.items.partialDownload({
   drive: 'me', // only be used when only `itemId` is provided
   driveId: 'me' // only be required when `drive` is provided
 });
-fileStream.pipe(SomeWritableStream);
+partialPromise.then(
+  (fileStream) => fileStream.pipe(SomeWritableStream)
+);
 ```
 
 ### items.customEndpoint
