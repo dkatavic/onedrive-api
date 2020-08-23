@@ -56,7 +56,7 @@ describe("uploadSession", function () {
       // 10MB
       const fs = require("fs");
       const path = require("path");
-      const exampleFilePath = path.join(__dirname, "../../example-data//10MB_file.txt");
+      const exampleFilePath = path.join(__dirname, "../../example-data/10MB_file.txt");
       const readableStream = fs.createReadStream(exampleFilePath);
       const fsStat = fs.statSync(exampleFilePath);
       oneDrive.items
@@ -89,7 +89,7 @@ describe("uploadSession", function () {
       }).catch(errorHandler(done));
 
     });
-  })
+  });
 
   describe("Should upload Session 1kb file inside a folder using parentId", function () {
 
@@ -98,7 +98,7 @@ describe("uploadSession", function () {
     before(function (done) {
       filename = "test-uploadSession-" + faker.random.word();
       fileContent = "a".repeat(1 * 1024);
-      readableStream = new stringStream(fileContent);
+      readableStream = stringStream(fileContent);
       folderName = "test-uploadSessionFolder-" + faker.random.word();
 
       oneDrive.items
@@ -166,7 +166,7 @@ describe("uploadSession", function () {
     before(function (done) {
       filename = "test-uploadSession-" + faker.random.word();
       fileContent = "a".repeat(1 * 1024);
-      readableStream = new stringStream(fileContent);
+      readableStream = stringStream(fileContent);
       folderName = "test-uploadSessionFolder-" + faker.random.word();
 
       oneDrive.items
