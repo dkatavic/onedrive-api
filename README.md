@@ -328,10 +328,7 @@ let writestream = await oneDriveAPI.items.uploadSession({
 }, true, (err, results) => {
   if (err) console.log('Something went wrong when uploading to write stream', err)
   else console.log('Upload completed', results)
-}).then((item) => {
-// console.log(item);
-// returns body of https://docs.microsoft.com/en-us/onedrive/developer/rest-api/api/driveitem_createuploadsession?view=odsp-graph-online#http-response
-}).catch(e => console.log(e))
+})
 
 // Start the upload by piping a readstream
 readstream.pipe(writestream)
