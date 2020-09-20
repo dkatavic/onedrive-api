@@ -22,6 +22,8 @@ npm install onedrive-api
   - [getMetadata](#itemsgetmetadata)
   - [listChildren](#itemslistchildren)
   - [update](#itemsupdate)
+  - [sync](#itemssync)
+  - [customEndpoint](#itemscustomendpoint)
   - [uploadSimple](#itemsuploadsimple)
   - [uploadSession](#itemsuploadsession)
 
@@ -33,18 +35,14 @@ npm install onedrive-api
 var oneDriveAPI = require('onedrive-api');
 ```
 
-Since version 0.2.0 this npm module supports accessing shared files. Simply provide the parameter shared as true along
-with the user, who originally owns the files. Keep in mind, that in order to access the files the access token requires
-certain scopes (e.g. files.read.all). See the following snippet:
-
 ```javascript
 oneDriveAPI.items.listChildren({
     accessToken: accessToken,
     itemId: 'root',
-    shared: true,
-    user: 'dkatavic'
+    drive: 'me' // 'me' | 'user' | 'drive' | 'group' | 'site'
+    driveId: '' // BLANK | {user_id} | {drive_id} | {group_id} | {sharepoint_site_id}
   }).then((childrens) => {
-  // list all children of dkatavics root directory
+  // list all children of given root directory
   //
   // console.log(childrens);
   // returns body of https://dev.onedrive.com/items/list.htm#response
@@ -123,6 +121,57 @@ var fileStream = oneDriveAPI.items.download({
   itemId: createdFolder.id
 });
 fileStream.pipe(SomeWritableStream);
+```
+
+### items.customEndpoint
+
+Call custom endpoint
+
+**Returns**: <code>Object</code> - Readable stream with item's content
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>Object</code> |  |
+| params.accessToken | <code>String</code> | OneDrive access token |
+| params.url | <code>String</code> | Endpoint url. Ex. 'groups/{groupId}/drives' |
+| params.body | <code>Object</code> | <code>false</code> | Optional body |
+| params.method | <code>String</code> | Optional method |
+
+```javascript
+oneDriveAPI.items.customEndpoint({
+  accessToken: accessToken,
+  url: 'me/drive/special/cameraroll',
+  // method: 'GET'
+  // body: {}
+}).then(r => {
+  console.log(r)
+}).catch(e => {
+  console.log(e)
+})
+```
+
+### items.sync
+
+Sync changes
+
+**Returns**: <code>Array</code> - Changes since last sync
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>Object</code> |  |
+| params.accessToken | <code>String</code> | OneDrive access token |
+| params.next | <code>String</code> | nextLink (or deltaLink returned from last session). |
+
+```javascript
+oneDriveAPI.items.sync({
+  accessToken: accessToken,
+  next: 'https://graph.microsoft.com/v1.0/me/drive/delta(token=1230919asd190410jlka)'
+}).then((item) => {
+  // console.log(item);
+  // returns body of https://docs.microsoft.com/nb-no/onedrive/developer/rest-api/api/driveitem_delta?view=odsp-graph-online#response
+})
 ```
 
 ### items.getMetadata
@@ -261,6 +310,8 @@ oneDriveAPI.items.uploadSession({
   filename: filename,
   fileSize: fileSize,
   readableStream: readableStream
+}, (bytesUploaded) => {
+  console.log(bytesUploaded)
 }).then((item) => {
 // console.log(item);
 // returns body of https://docs.microsoft.com/en-us/onedrive/developer/rest-api/api/driveitem_createuploadsession?view=odsp-graph-online#http-response
