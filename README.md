@@ -249,12 +249,14 @@ List childrens
 | [params.itemId] | <code>String</code> | <code>root</code> | Item id |
 | params.drive | <code>String</code> | `'me'` | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
 | params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
+| params.query | <code>String</code> | `undefined` | OData system query options. |
 
 
 ```javascript
 oneDriveAPI.items.listChildren({
   accessToken: accessToken,
-  itemId: createdFolder.id
+  itemId: createdFolder.id,
+  query: '?$filter=createdDateTime le 2020-07-07T12:56:51.577Z'
 }).then((childrens) => {
 // console.log(childrens);
 // returns body of https://dev.onedrive.com/items/list.htm#response
