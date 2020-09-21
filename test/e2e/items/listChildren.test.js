@@ -12,7 +12,7 @@ describe('listChildren', function(){
 
   before(function(done) {
 
-    //create folder and file for asserts
+    //create folders for asserts
     oneDrive.items.createFolder({
       accessToken: accessToken,
       rootItemId: "root",
