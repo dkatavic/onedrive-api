@@ -39,7 +39,7 @@ var oneDriveAPI = require('onedrive-api');
 oneDriveAPI.items.listChildren({
     accessToken: accessToken,
     itemId: 'root',
-    drive: 'me' // 'me' | 'user' | 'drive' | 'group' | 'site'
+    drive: 'me', // 'me' | 'user' | 'drive' | 'group' | 'site'
     driveId: '' // BLANK | {user_id} | {drive_id} | {group_id} | {sharepoint_site_id}
   }).then((childrens) => {
   // list all children of given root directory
@@ -142,7 +142,7 @@ Call custom endpoint
 oneDriveAPI.items.customEndpoint({
   accessToken: accessToken,
   url: 'me/drive/special/cameraroll',
-  // method: 'GET'
+  // method: 'GET',
   // body: {}
 }).then(r => {
   console.log(r)
@@ -302,9 +302,11 @@ Create file with session upload. Use this for the files over 4MB. This is a sync
 | params.shared | <code>Boolean</code> | <code>false</code> | A flag to indicated whether this files is owned by the user or shared from another user. If true params.user has to be set. |
 | params.user | <code>String</code> |  | The user who shared the file. Must be set if params.shared is true. |
 | [params.chunksToUpload] | <code>Number</code> | <code>20</code> | Chunks to upload per request. More chunks per request requires more RAM |
-
+| [writeStream] | <code>Boolean</code> | <code>false</code> | Return writeStream instead of handling upload directly |
+| [cb] | <code>Function (err, results)</code> |  | Callback for writestream |
 
 ```javascript
+// Handle by upload using this library (starts at once)
 oneDriveAPI.items.uploadSession({
   accessToken: accessToken,
   filename: filename,
@@ -315,7 +317,23 @@ oneDriveAPI.items.uploadSession({
 }).then((item) => {
 // console.log(item);
 // returns body of https://docs.microsoft.com/en-us/onedrive/developer/rest-api/api/driveitem_createuploadsession?view=odsp-graph-online#http-response
+}).catch(e => console.log(e))
+
+// Handle upload using write stream
+let writestream = await oneDriveAPI.items.uploadSession({
+  accessToken: accessToken,
+  filename: filename,
+  fileSize: fileSize,
+  readableStream: readableStream
+}, (bytesUploaded) => {
+  console.log(bytesUploaded)
+}, true, (err, results) => {
+  if (err) console.log('Something went wrong when uploading to write stream', err)
+  else console.log('Upload completed', results)
 })
+
+// Start the upload by piping a readstream
+readstream.pipe(writestream)
 ```
 
 ## [Changelog](./CHANGELOG.md)
