@@ -56,17 +56,22 @@ describe("uploadSession", function () {
       // 10MB
       const fs = require("fs");
       const path = require("path");
-      const exampleFilePath = path.join(__dirname, "../../example-data//10MB_file.txt");
+      const exampleFilePath = path.join(__dirname, "../../example-data/10MB_file.txt");
       const readableStream = fs.createReadStream(exampleFilePath);
       const fsStat = fs.statSync(exampleFilePath);
+      const processReport = (process) => console.log(
+        `Uploaded bytes: ${process}/${fsStat.size} (${((process / fsStat.size) * 100).toFixed(3)})%`
+      );
       oneDrive.items
-        .uploadSession({
-          accessToken: accessToken,
-          filename: filename,
-          readableStream: readableStream,
-          fileSize: fsStat.size
-        })
-        .then(function (item) {
+        .uploadSession(
+          {
+            accessToken: accessToken,
+            filename: filename,
+            readableStream: readableStream,
+            fileSize: fsStat.size
+          },
+          processReport
+        ).then(function (item) {
           expect(item.id).to.be.a("String");
           expect(item.name).to.be.a("String");
           expect(item.size).to.be.a("Number");
@@ -89,7 +94,7 @@ describe("uploadSession", function () {
       }).catch(errorHandler(done));
 
     });
-  })
+  });
 
   describe("Should upload Session 1kb file inside a folder using parentId", function () {
 
@@ -98,7 +103,7 @@ describe("uploadSession", function () {
     before(function (done) {
       filename = "test-uploadSession-" + faker.random.word();
       fileContent = "a".repeat(1 * 1024);
-      readableStream = new stringStream(fileContent);
+      readableStream = stringStream(fileContent);
       folderName = "test-uploadSessionFolder-" + faker.random.word();
 
       oneDrive.items
@@ -166,7 +171,7 @@ describe("uploadSession", function () {
     before(function (done) {
       filename = "test-uploadSession-" + faker.random.word();
       fileContent = "a".repeat(1 * 1024);
-      readableStream = new stringStream(fileContent);
+      readableStream = stringStream(fileContent);
       folderName = "test-uploadSessionFolder-" + faker.random.word();
 
       oneDrive.items

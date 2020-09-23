@@ -1,6 +1,6 @@
 {
   "name": "onedrive-api",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "OneDrive module for communicating with oneDrive API. Built using functional programming pattern",
   "main": "lib/index.js",
   "scripts": {
@@ -31,7 +31,6 @@
     "faker": "^3.1.0",
     "install": "0.6.1",
     "mocha": "^5.2.0",
-    "string-stream": "0.0.7",
     "string-to-stream": "^1.1.1"
   }
 }
