@@ -59,14 +59,19 @@ describe("uploadSession", function () {
       const exampleFilePath = path.join(__dirname, "../../example-data/10MB_file.txt");
       const readableStream = fs.createReadStream(exampleFilePath);
       const fsStat = fs.statSync(exampleFilePath);
+      const processReport = (process) => console.log(
+        `Uploaded bytes: ${process}/${fsStat.size} (${((process / fsStat.size) * 100).toFixed(3)})%`
+      );
       oneDrive.items
-        .uploadSession({
-          accessToken: accessToken,
-          filename: filename,
-          readableStream: readableStream,
-          fileSize: fsStat.size
-        })
-        .then(function (item) {
+        .uploadSession(
+          {
+            accessToken: accessToken,
+            filename: filename,
+            readableStream: readableStream,
+            fileSize: fsStat.size
+          },
+          processReport
+        ).then(function (item) {
           expect(item.id).to.be.a("String");
           expect(item.name).to.be.a("String");
           expect(item.size).to.be.a("Number");

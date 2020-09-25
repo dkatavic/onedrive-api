@@ -67,7 +67,8 @@ describe("uploadSimple", function(){
   });
 
   it("Should upload Simple file using Stream and parentPath", function(done){
-
+    // restart the stream
+    readableStream = stringStream(fileContent);
     oneDrive.items.uploadSimple({
       accessToken: accessToken,
       filename: filename,
