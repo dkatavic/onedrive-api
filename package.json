@@ -22,6 +22,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "got": "^11.7.0",
     "is-empty-object": "^1.1.1",
     "request": "^2.88.0",
     "request-promise": "^2.0.1"
