@@ -29,7 +29,7 @@ describe("delete", function(){
       itemId: createdFolder.id
     }).then(function(_item){
       //delete returns 204 No Contentđ
-      expect(_item).to.be.equal(undefined);
+      expect(_item).to.be.equal(true);
       done();
     }).catch(errorHandler(done));
     

@@ -42,7 +42,6 @@ describe("download", function () {
       .download({
         accessToken: accessToken,
         itemId: createdFile.id,
-        progress: (p) => console.log(p),
       })
       .then((fileStream) => {
         fileStream.on("data", function (data) {
