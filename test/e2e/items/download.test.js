@@ -1,10 +1,10 @@
 // download.test.js
 
-var faker = require("faker"),
+const faker = require("faker"),
   stringStream = require("string-to-stream");
 
 describe("download", function () {
-  var filename, readableStream, fileContent, createdFile;
+  let filename, readableStream, fileContent, createdFile;
 
   before(function (done) {
     filename = "test-download-" + faker.random.word();
@@ -37,25 +37,23 @@ describe("download", function () {
   });
 
   it("Should download Simple file using Stream", function (done) {
-    var partialString = "";
-    oneDrive.items
-      .download({
-        accessToken: accessToken,
-        itemId: createdFile.id,
-      })
-      .then((fileStream) => {
-        fileStream.on("data", function (data) {
-          partialString += data.toString();
-        });
+    let partialString = "";
+    const fileStream = oneDrive.items.download({
+      accessToken: accessToken,
+      itemId: createdFile.id,
+    });
 
-        fileStream.on("end", function () {
-          expect(partialString).to.be.equal(fileContent);
-          done();
-        });
+    fileStream.on("data", function (data) {
+      partialString += data.toString();
+    });
 
-        fileStream.on("error", function (err) {
-          errorHandler(done)(err);
-        });
-      });
+    fileStream.on("end", function () {
+      expect(partialString).to.be.equal(fileContent);
+      done();
+    });
+
+    fileStream.on("error", function (err) {
+      errorHandler(done)(err);
+    });
   });
 });
