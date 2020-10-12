@@ -1,38 +1,36 @@
 // delete.test.js
-var faker = require('faker');
+const faker = require("faker");
 
-describe("delete", function(){
-  
-  var folderName = "test-" + faker.random.word(),
-      fileName1 = "test-" + faker.random.word();
-  
-  var createdFolder;
-  
-  before(function(done){
-    
+describe("delete", function () {
+  let createdFolder;
+  const folderName = "test-" + faker.random.word();
+
+  before(function (done) {
     //create folder and files inside
-    oneDrive.items.createFolder({
-      accessToken: accessToken,
-      rootItemId: "root",
-      name: folderName
-    }).then(function(_folder){
-      createdFolder = _folder;
-      done();
-    }).catch(done);
-    
+    oneDrive.items
+      .createFolder({
+        accessToken: accessToken,
+        rootItemId: "root",
+        name: folderName,
+      })
+      .then(function (_folder) {
+        createdFolder = _folder;
+        done();
+      })
+      .catch(done);
   });
-  
-  it("Should delete empty folder", function(done){
-    
-    oneDrive.items.delete({
-      accessToken: accessToken,
-      itemId: createdFolder.id
-    }).then(function(_item){
-      //delete returns 204 No Contentđ
-      expect(_item).to.be.equal(true);
-      done();
-    }).catch(errorHandler(done));
-    
-  })
-  
+
+  it("Should delete empty folder", function (done) {
+    oneDrive.items
+      .delete({
+        accessToken: accessToken,
+        itemId: createdFolder.id,
+      })
+      .then(function (_item) {
+        //delete returns 204 No Content
+        expect(_item).to.be.equal(true);
+        done();
+      })
+      .catch(errorHandler(done));
+  });
 });
