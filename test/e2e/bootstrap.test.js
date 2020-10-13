@@ -1,8 +1,7 @@
-var oneDrive = require('../../lib/index'),
-  mocha = require('mocha'),
-  chai = require('chai'),
-  credentials = require('./credentials');
-
+const oneDrive = require("../../lib/index"),
+  mocha = require("mocha"),
+  chai = require("chai"),
+  credentials = require("./credentials");
 
 //set globals
 global.accessToken = credentials.accessToken;
@@ -15,9 +14,8 @@ global.errorHandler = function (done) {
   return function (err) {
     console.error(err);
     done(err);
-  }
-}
-
+  };
+};
 
 process.nextTick(() => {
   run();
