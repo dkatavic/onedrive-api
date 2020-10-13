@@ -1,0 +1,5 @@
+{
+  "timeout": 15000,
+  "delay": true,
+  "recursive": true
+}
