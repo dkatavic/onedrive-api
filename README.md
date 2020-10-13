@@ -55,7 +55,7 @@ oneDriveAPI.items.listChildren({
 
 Create Folder
 
-**Returns**: <code>Object</code> - folder object
+**Returns**: <code>Promise\<Object></code> - folder meta object
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -82,7 +82,7 @@ oneDriveAPI.items.createFolder({
 
 Delete item (file or folder)
 
-**Returns**: <code>undefined</code> - (204 No content)
+**Returns**: <code>Promise\<boolean></code> - `true` for success request.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -97,7 +97,8 @@ Delete item (file or folder)
 oneDriveAPI.items.delete({
   accessToken: accessToken,
   itemId: createdFolder.id
-}).then(() => {
+}).then((isDeleted) => {
+// isDeleted = true => file is deleted
 })
 ```
 
@@ -105,7 +106,7 @@ oneDriveAPI.items.delete({
 
 Download item content
 
-**Returns**: <code>Object</code> - Readable stream with item's content
+**Returns**: <code>ReadableStream</code> - Readable stream with item's content
 
 
 | Param | Type |  Default | Description |
@@ -130,7 +131,7 @@ Download item content partially. You must either provide `graphDownloadURL` or t
 
 If only the `itemId` is provided, the function will try to get the download URL for you with additional `getMetadata()` function call.
 
-**Returns**: <code>Promise</code> - A promise with the result is a `Readable stream` with partial item's content
+**Returns**: <code>Promise\<ReadableStream></code> - A promise with the result is a `Readable stream` with partial item's content
 
 
 | Param | Type | Default | Description |
@@ -162,9 +163,9 @@ partialPromise.then(
 
 ### items.customEndpoint
 
-Call custom endpoint
+Call custom endpoint with JSON response.
 
-**Returns**: <code>Object</code> - Readable stream with item's content
+**Returns**: <code>Promise\<Object></code> - JSON object.
 
 
 | Param | Type | Description |
@@ -192,7 +193,7 @@ oneDriveAPI.items.customEndpoint({
 
 Sync changes
 
-**Returns**: <code>Array</code> - Changes since last sync
+**Returns**: <code>Promise\<Object></code> - Object represent the changes since last sync
 
 
 | Param | Type | Description |
@@ -215,7 +216,7 @@ oneDriveAPI.items.sync({
 
 Get items metadata (file or folder)
 
-**Returns**: <code>Object</code> - Item's metadata
+**Returns**: <code>Promise\<Object></code> - Item's metadata
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -240,7 +241,7 @@ oneDriveAPI.items.getMetadata({
 
 List childrens
 
-**Returns**: <code>Array</code> - object of children items
+**Returns**: <code>Promise\<Object></code> - object of children items
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -267,7 +268,7 @@ oneDriveAPI.items.listChildren({
 
 Update item metadata
 
-**Returns**: <code>Object</code> - Item object
+**Returns**: <code>Promise\<Object></code> - Item meta object
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -296,7 +297,7 @@ oneDriveAPI.items.update({
 
 Create file with simple upload
 
-**Returns**: <code>Object</code> - Item
+**Returns**: <code>Promise\<Object></code> - Item
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -323,9 +324,9 @@ oneDriveAPI.items.uploadSimple({
 
 ### items.uploadSession
 
-Create file with session upload. Use this for the files over 4MB. This is a synchronous wrapper around asynchronous method, which means that on the failed upload you can't resume the upload but need to retry the implementation. I am accepting PRs for asynchronous implementation
+Create a file with session upload. Use this for the files over 4MB. This is a synchronous wrapper around asynchronous method, which means that on the failed upload you can't resume the upload but need to retry the implementation. I am accepting PRs for asynchronous implementation.
 
-**Returns**: <code>Object</code> - Item
+**Returns**: <code>Promise\<Object></code> - Item
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
