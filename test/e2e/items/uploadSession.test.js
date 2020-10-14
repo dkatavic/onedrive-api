@@ -59,6 +59,7 @@ describe("uploadSession", function () {
     let createdFile;
 
     it("Should upload Session 10MB file using Stream", function (done) {
+      this.timeout(60 * 1000)
       const filename = "test-uploadSession-" + faker.random.word();
       // 10MB
       const fs = require("fs");

@@ -2,7 +2,7 @@
 
 ### unit
 
-TODO: unit tests
+To run unit tests, execute `npm run test:unit`
 
 ### e2e
 
