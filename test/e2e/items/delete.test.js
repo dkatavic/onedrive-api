@@ -29,9 +29,6 @@ describe("delete", function () {
       .then(function () {
         done();
       })
-    .catch((error) => {
-      console.dir(error.response);
-      errorHandler(done)(error);
-    });
+      .catch(errorHandler(done));
   });
 });
