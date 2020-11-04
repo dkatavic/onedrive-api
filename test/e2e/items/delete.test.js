@@ -26,11 +26,12 @@ describe("delete", function () {
         accessToken: accessToken,
         itemId: createdFolder.id,
       })
-      .then(function (_item) {
-        //delete returns 204 No Content
-        expect(_item).to.be.equal(true);
+      .then(function () {
         done();
       })
-      .catch(errorHandler(done));
+    .catch((error) => {
+      console.dir(error.response);
+      errorHandler(done)(error);
+    });
   });
 });

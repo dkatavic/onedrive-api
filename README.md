@@ -82,7 +82,7 @@ oneDriveAPI.items.createFolder({
 
 Delete item (file or folder)
 
-**Returns**: <code>Promise\<boolean></code> - `true` for success request.
+**Returns**: <code>Promise\<void></code> - The promise will throw [HttpError](https://www.npmjs.com/package/got#errors) if the delete API fail.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -97,8 +97,11 @@ Delete item (file or folder)
 oneDriveAPI.items.delete({
   accessToken: accessToken,
   itemId: createdFolder.id
-}).then((isDeleted) => {
-// isDeleted = true => file is deleted
+}).then(() => {
+  // file is deleted
+}).catch((error) => {
+  // error.response.statusCode => error code
+  // error.response.statusMessage => error message
 })
 ```
 
