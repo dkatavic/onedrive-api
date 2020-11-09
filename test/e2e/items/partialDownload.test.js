@@ -4,7 +4,7 @@ const faker = require("faker");
 const stringStream = require("string-to-stream");
 
 describe("partialDownload", function () {
-  var filename, readableStream, fileContent, createdFile;
+  let filename, readableStream, fileContent, createdFile;
 
   before(function (done) {
     filename = "test-download-" + faker.random.word();
@@ -37,7 +37,7 @@ describe("partialDownload", function () {
   });
 
   it("Should partial download Simple file using Stream", function (done) {
-    var partialPromise = oneDrive.items.partialDownload({
+    const partialPromise = oneDrive.items.partialDownload({
       accessToken: accessToken,
       itemId: createdFile.id,
       bytesFrom: 0,
@@ -45,7 +45,7 @@ describe("partialDownload", function () {
     });
     partialPromise
       .then((fileStream) => {
-        var partialString = "";
+        let partialString = "";
         fileStream.on("data", function (data) {
           partialString += data.toString();
         });

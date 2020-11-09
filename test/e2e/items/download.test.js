@@ -1,48 +1,49 @@
 // download.test.js
 
-var faker = require('faker'),
-    stringStream = require('string-to-stream');
+const faker = require("faker"),
+  stringStream = require("string-to-stream");
 
-describe("download", function(){
+describe("download", function () {
+  let filename, readableStream, fileContent, createdFile;
 
-  var filename, readableStream, fileContent, createdFile;
-
-  before(function(done){
-
+  before(function (done) {
     filename = "test-download-" + faker.random.word();
     fileContent = faker.lorem.paragraphs();
     readableStream = stringStream(fileContent);
 
-    oneDrive.items.uploadSimple({
-      accessToken: accessToken,
-      filename: filename,
-      readableStream: readableStream
-    }).then(function(item){
-      createdFile = item;
-      done();
-    }).catch(errorHandler(done));
-
+    oneDrive.items
+      .uploadSimple({
+        accessToken: accessToken,
+        filename: filename,
+        readableStream: readableStream,
+      })
+      .then(function (item) {
+        createdFile = item;
+        done();
+      })
+      .catch(errorHandler(done));
   });
 
-  after(function(done){
-
-    oneDrive.items.delete({
-      accessToken: accessToken,
-      itemId: createdFile.id
-    }).then(function(_item){
-      done();
-    }).catch(errorHandler(done));
-
-  })
+  after(function (done) {
+    oneDrive.items
+      .delete({
+        accessToken: accessToken,
+        itemId: createdFile.id,
+      })
+      .then(function (_item) {
+        done();
+      })
+      .catch(errorHandler(done));
+  });
 
   it("Should download Simple file using Stream", function (done) {
-    var partialString = "";
-    var fileStream = oneDrive.items.download({
+    let partialString = "";
+    const fileStream = oneDrive.items.download({
       accessToken: accessToken,
-      itemId: createdFile.id
+      itemId: createdFile.id,
     });
 
-    fileStream.on('data', function(data){
+    fileStream.on("data", function (data) {
       partialString += data.toString();
     });
 
@@ -51,10 +52,8 @@ describe("download", function(){
       done();
     });
 
-    fileStream.on('error', function(err){
+    fileStream.on("error", function (err) {
       errorHandler(done)(err);
     });
-
   });
-
 });

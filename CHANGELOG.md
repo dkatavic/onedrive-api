@@ -1,8 +1,21 @@
 # Changelog
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+## [1.0.0]
+
+- Migrate to `got` since `request` [was deprecated](https://github.com/request/request/issues/3142). See more reason on this migration [here](https://github.com/dkatavic/onedrive-api/issues/30).
+- Update `mocha` version and test cases to cover all API.
+
+### Breaking
+
+- Only support NodeJS version `4.x` or greater.
+- All APIs are now implement with `promise`/`async` except `download()` API - it returns a `ReadableStream`. Other APIs should be used with `async/await`.
+- `delete()` API now return `boolean` value instead. `true` for deleting successfully.
+- Failure requests now should be handled with `try/catch`.
 
 ## [0.5.0]
 
@@ -32,11 +45,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Resolved package vulnerabilities
 
 ## [0.2.0]
+
 ### Added
 
 - Support for accessing shared files
 
 ## [0.1.0]
+
 ### Breaking
 
 - Since version 0.1 this repo is using `graph.microsoft.com` API instead of `api.onedrive.com` to support enterprise accounts too. You should verify that you are authorizing against `graph.microsoft.com`. All of the API's are working indentically
