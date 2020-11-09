@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Breaking
 
-- Only support NodeJS version `4.x` or greater.
+- Only support NodeJS version `10.x` or greater.
 - All APIs are now implement with `promise`/`async` except `download()` API - it returns a `ReadableStream`. Other APIs should be used with `async/await`.
 - `delete()` API now return `boolean` value instead. `true` for deleting successfully.
 - Failure requests now should be handled with `try/catch`.
