@@ -2,9 +2,8 @@
 
 [![CircleCI](https://circleci.com/gh/dkatavic/onedrive-api/tree/master.svg?style=svg&circle-token=0410ac864820f55930f276a46fa955a788b03eee)](https://circleci.com/gh/dkatavic/onedrive-api/tree/master)
 
-OneDrive API module for Node.js. It's built with pure functional programing, there are no unnecessary objects.
+OneDrive API module for NodeJS. This module handels operations with OneDrive API. For authenticating with OneDrive, we suggest using OS solutions like [simple-oauth2](https://github.com/lelylan/simple-oauth2). We are accepting pull requests for any missing features
 
-It's built for internal project so it supports only basic CRUD operations needed for project (for now). I will accept any pull requests.
 
 # Install
 
@@ -33,7 +32,7 @@ npm install onedrive-api
 ### Require module
 
 ```javascript
-var oneDriveAPI = require('onedrive-api');
+const oneDriveAPI = require('onedrive-api');
 ```
 
 ```javascript
@@ -121,7 +120,7 @@ Download item content
 | params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
 
 ```javascript
-var fileStream = oneDriveAPI.items.download({
+const fileStream = oneDriveAPI.items.download({
   accessToken: accessToken,
   itemId: createdFolder.id
 });
@@ -130,7 +129,7 @@ fileStream.pipe(SomeWritableStream);
 
 ### items.partialDownload
 
-Download item content partially. You must either provide `graphDownloadURL` or the `itemId` to download the file. 
+Download item content partially. You must either provide `graphDownloadURL` or the `itemId` to download the file.
 
 If only the `itemId` is provided, the function will try to get the download URL for you with additional `getMetadata()` function call.
 
@@ -149,7 +148,7 @@ If only the `itemId` is provided, the function will try to get the download URL 
 | params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
 
 ```javascript
-var partialPromise = oneDriveAPI.items.partialDownload({
+const partialPromise = oneDriveAPI.items.partialDownload({
   accessToken: accessToken,
   bytesFrom: 0, // start byte
   bytesTo: 1034, // to byte

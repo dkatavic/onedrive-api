@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.1]
+
+- Handle OData special charachters in the filename `'` and `(`
+
 ## [1.0.0]
 
 - Migrate to `got` since `request` [was deprecated](https://github.com/request/request/issues/3142). See more reason on this migration [here](https://github.com/dkatavic/onedrive-api/issues/30).
