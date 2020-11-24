@@ -92,7 +92,7 @@ describe("uploadSimple", function () {
 });
 
 
-describe.only("uploadSimple Handle special characters", function () {
+describe("uploadSimple Handle special characters", function () {
   let filename, readableStream, fileContent, createdFile;
 
   beforeEach(() => {
