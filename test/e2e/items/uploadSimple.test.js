@@ -90,3 +90,64 @@ describe("uploadSimple", function () {
       .catch(errorHandler(done));
   });
 });
+
+
+describe("uploadSimple Handle special characters", function () {
+  let filename, readableStream, fileContent, createdFile;
+
+  beforeEach(() => {
+    filename = "test-uploadSimple-" + faker.random.word();
+    fileContent = faker.lorem.paragraphs();
+    readableStream = stringStream(fileContent);
+  });
+
+  afterEach(function (done) {
+    oneDrive.items
+      .delete({
+        accessToken: accessToken,
+        itemId: createdFile.id,
+      })
+      .then(() => done())
+      .catch(errorHandler(done));
+  });
+
+  it("Should handle special OData '(' charachter", function (done) {
+    filename = filename + 'testing(1).ico';
+    oneDrive.items
+      .uploadSimple({
+        accessToken: accessToken,
+        filename: filename,
+        readableStream: readableStream,
+      })
+      .then(function (item) {
+        expect(item.id).to.be.a("String");
+        expect(item.name).to.be.a("String");
+        expect(item.size).to.be.a("Number");
+        expect(item.size).to.be.at.least(1);
+        expect(item.id).to.be.a("String");
+        createdFile = item;
+        done();
+      })
+      .catch(errorHandler(done));
+  });
+
+  it("Should special OData ' charachter", function (done) {
+    filename = filename + "test'ing.ico";
+    oneDrive.items
+      .uploadSimple({
+        accessToken: accessToken,
+        filename: filename,
+        readableStream: readableStream,
+      })
+      .then(function (item) {
+        expect(item.id).to.be.a("String");
+        expect(item.name).to.be.a("String");
+        expect(item.size).to.be.a("Number");
+        expect(item.size).to.be.at.least(1);
+        expect(item.id).to.be.a("String");
+        createdFile = item;
+        done();
+      })
+      .catch(errorHandler(done));
+  });
+});
