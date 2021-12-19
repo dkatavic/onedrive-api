@@ -26,6 +26,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      # Ensure Prettier + ESLint has been run on all JS files
+      - run: npx prettier "./**/*.{js}" && npx eslint "./**/*.{js}"
+
       # run tests!
       - run: npm test
 
