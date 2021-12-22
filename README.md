@@ -4,7 +4,6 @@
 
 OneDrive API module for NodeJS. This module handels operations with OneDrive API. For authenticating with OneDrive, we suggest using OS solutions like [simple-oauth2](https://github.com/lelylan/simple-oauth2). We are accepting pull requests for any missing features
 
-
 # Install
 
 ```sh
@@ -15,40 +14,41 @@ npm install onedrive-api
 
 ### Items
 
-  - [createFolder](#itemscreatefolder)
-  - [delete](#itemsdelete)
-  - [download](#itemsdownload)
-  - [partialDownload](#itemspartialdownload)
-  - [getMetadata](#itemsgetmetadata)
-  - [listChildren](#itemslistchildren)
-  - [update](#itemsupdate)
-  - [sync](#itemssync)
-  - [customEndpoint](#itemscustomendpoint)
-  - [uploadSimple](#itemsuploadsimple)
-  - [uploadSession](#itemsuploadsession)
+- [createFolder](#itemscreatefolder)
+- [delete](#itemsdelete)
+- [download](#itemsdownload)
+- [partialDownload](#itemspartialdownload)
+- [getMetadata](#itemsgetmetadata)
+- [listChildren](#itemslistchildren)
+- [update](#itemsupdate)
+- [sync](#itemssync)
+- [customEndpoint](#itemscustomendpoint)
+- [uploadSimple](#itemsuploadsimple)
+- [uploadSession](#itemsuploadsession)
 
 # Examples
 
 ### Require module
 
 ```javascript
-const oneDriveAPI = require('onedrive-api');
+const oneDriveAPI = require("onedrive-api");
 ```
 
 ```javascript
-oneDriveAPI.items.listChildren({
+oneDriveAPI.items
+  .listChildren({
     accessToken: accessToken,
-    itemId: 'root',
-    drive: 'me', // 'me' | 'user' | 'drive' | 'group' | 'site'
-    driveId: '' // BLANK | {user_id} | {drive_id} | {group_id} | {sharepoint_site_id}
-  }).then((childrens) => {
-  // list all children of given root directory
-  //
-  // console.log(childrens);
-  // returns body of https://dev.onedrive.com/items/list.htm#response
+    itemId: "root",
+    drive: "me", // 'me' | 'user' | 'drive' | 'group' | 'site'
+    driveId: "", // BLANK | {user_id} | {drive_id} | {group_id} | {sharepoint_site_id}
   })
+  .then((childrens) => {
+    // list all children of given root directory
+    //
+    // console.log(childrens);
+    // returns body of https://dev.onedrive.com/items/list.htm#response
+  });
 ```
-
 
 ### items.createFolder
 
@@ -56,25 +56,26 @@ Create Folder
 
 **Returns**: <code>Promise\<Object></code> - folder meta object
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>Object</code> |  |  |
-| params.accessToken | <code>String</code> |  | OneDrive access token |
-| [params.rootItemId] | <code>String</code> | <code>root</code> | Item id |
-| params.name | <code>String</code> |  | New folder name |
-| params.drive | <code>String</code> | `'me'` | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
-| params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
-
+| Param               | Type                | Default           | Description                                                                                     |
+| ------------------- | ------------------- | ----------------- | ----------------------------------------------------------------------------------------------- |
+| params              | <code>Object</code> |                   |                                                                                                 |
+| params.accessToken  | <code>String</code> |                   | OneDrive access token                                                                           |
+| [params.rootItemId] | <code>String</code> | <code>root</code> | Item id                                                                                         |
+| params.name         | <code>String</code> |                   | New folder name                                                                                 |
+| params.drive        | <code>String</code> | `'me'`            | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId      | <code>String</code> | `undefined`       | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
 
 ```javascript
-oneDriveAPI.items.createFolder({
-  accessToken: accessToken,
-  rootItemId: "root",
-  name: "Folder name"
-}).then((item) => {
-// console.log(item)
-// returns body of https://dev.onedrive.com/items/create.htm#response
-})
+oneDriveAPI.items
+  .createFolder({
+    accessToken: accessToken,
+    rootItemId: "root",
+    name: "Folder name",
+  })
+  .then((item) => {
+    // console.log(item)
+    // returns body of https://dev.onedrive.com/items/create.htm#response
+  });
 ```
 
 ### items.delete
@@ -83,25 +84,27 @@ Delete item (file or folder)
 
 **Returns**: <code>Promise\<void></code> - The promise will throw [HttpError](https://www.npmjs.com/package/got#errors) if the delete API fail.
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>Object</code> |  |
-| params.accessToken | <code>String</code> |  | OneDrive access token |
-| params.itemId | <code>String</code> |  | Item id |
-| params.drive | <code>String</code> | `'me'` | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
-| params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
-
+| Param              | Type                | Default     | Description                                                                                     |
+| ------------------ | ------------------- | ----------- | ----------------------------------------------------------------------------------------------- |
+| params             | <code>Object</code> |             |                                                                                                 |
+| params.accessToken | <code>String</code> |             | OneDrive access token                                                                           |
+| params.itemId      | <code>String</code> |             | Item id                                                                                         |
+| params.drive       | <code>String</code> | `'me'`      | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId     | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
 
 ```javascript
-oneDriveAPI.items.delete({
-  accessToken: accessToken,
-  itemId: createdFolder.id
-}).then(() => {
-  // file is deleted
-}).catch((error) => {
-  // error.response.statusCode => error code
-  // error.response.statusMessage => error message
-})
+oneDriveAPI.items
+  .delete({
+    accessToken: accessToken,
+    itemId: createdFolder.id,
+  })
+  .then(() => {
+    // file is deleted
+  })
+  .catch((error) => {
+    // error.response.statusCode => error code
+    // error.response.statusMessage => error message
+  });
 ```
 
 ### items.download
@@ -110,19 +113,18 @@ Download item content
 
 **Returns**: <code>ReadableStream</code> - Readable stream with item's content
 
-
-| Param | Type |  Default | Description |
-| --- | --- | --- | --- |
-| params | <code>Object</code> |  |  |
-| params.accessToken | <code>String</code> | | OneDrive access token |
-| params.itemId | <code>String</code> |  | item id |
-| params.drive | <code>String</code> | `'me'` | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
-| params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
+| Param              | Type                | Default     | Description                                                                                     |
+| ------------------ | ------------------- | ----------- | ----------------------------------------------------------------------------------------------- |
+| params             | <code>Object</code> |             |                                                                                                 |
+| params.accessToken | <code>String</code> |             | OneDrive access token                                                                           |
+| params.itemId      | <code>String</code> |             | item id                                                                                         |
+| params.drive       | <code>String</code> | `'me'`      | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId     | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
 
 ```javascript
 const fileStream = oneDriveAPI.items.download({
   accessToken: accessToken,
-  itemId: createdFolder.id
+  itemId: createdFolder.id,
 });
 fileStream.pipe(SomeWritableStream);
 ```
@@ -135,32 +137,29 @@ If only the `itemId` is provided, the function will try to get the download URL 
 
 **Returns**: <code>Promise\<ReadableStream></code> - A promise with the result is a `Readable stream` with partial item's content
 
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>Object</code> | |  |
-| params.accessToken | <code>String</code> | | OneDrive access token |
-| params.graphDownloadURL | <code>String</code> | | `@microsoft.graph.downloadUrl` of the item |
-| params.itemId | <code>String</code> |  | item id. This parameter will be skipped if `graphDownloadURL` is provided. |
-| params.bytesFrom | <code>Number</code> | `0` | Starting download byte. |
-| params.bytesTo | <code>Number</code> | | Ending byte to download. Must be set |
-| params.drive | <code>String</code> | `'me'` | Only be used if only `params.itemId` is set and `params.graphDownloadURL` is undefined. If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
-| params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
+| Param                   | Type                | Default     | Description                                                                                                                                                                             |
+| ----------------------- | ------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| params                  | <code>Object</code> |             |                                                                                                                                                                                         |
+| params.accessToken      | <code>String</code> |             | OneDrive access token                                                                                                                                                                   |
+| params.graphDownloadURL | <code>String</code> |             | `@microsoft.graph.downloadUrl` of the item                                                                                                                                              |
+| params.itemId           | <code>String</code> |             | item id. This parameter will be skipped if `graphDownloadURL` is provided.                                                                                                              |
+| params.bytesFrom        | <code>Number</code> | `0`         | Starting download byte.                                                                                                                                                                 |
+| params.bytesTo          | <code>Number</code> |             | Ending byte to download. Must be set                                                                                                                                                    |
+| params.drive            | <code>String</code> | `'me'`      | Only be used if only `params.itemId` is set and `params.graphDownloadURL` is undefined. If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId          | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set.                                                                                                       |
 
 ```javascript
 const partialPromise = oneDriveAPI.items.partialDownload({
   accessToken: accessToken,
   bytesFrom: 0, // start byte
   bytesTo: 1034, // to byte
-  graphDownloadURL: createdItem['@microsoft.graph.downloadUrl'],
+  graphDownloadURL: createdItem["@microsoft.graph.downloadUrl"],
   // optional params
   itemId: createdItem.id, // only be used when `graphDownloadURL` is NOT provided
-  drive: 'me', // only be used when only `itemId` is provided
-  driveId: 'me' // only be required when `drive` is provided
+  drive: "me", // only be used when only `itemId` is provided
+  driveId: "me", // only be required when `drive` is provided
 });
-partialPromise.then(
-  (fileStream) => fileStream.pipe(SomeWritableStream)
-);
+partialPromise.then((fileStream) => fileStream.pipe(SomeWritableStream));
 ```
 
 ### items.customEndpoint
@@ -169,26 +168,28 @@ Call custom endpoint with JSON response.
 
 **Returns**: <code>Promise\<Object></code> - JSON object.
 
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>Object</code> |  |
-| params.accessToken | <code>String</code> | OneDrive access token |
-| params.url | <code>String</code> | Endpoint url. Ex. 'groups/{groupId}/drives' |
-| params.body | <code>Object</code> | <code>false</code> | Optional body |
-| params.method | <code>String</code> | Optional method |
+| Param              | Type                | Description                                 |               |
+| ------------------ | ------------------- | ------------------------------------------- | ------------- |
+| params             | <code>Object</code> |                                             |               |
+| params.accessToken | <code>String</code> | OneDrive access token                       |               |
+| params.url         | <code>String</code> | Endpoint url. Ex. 'groups/{groupId}/drives' |               |
+| params.body        | <code>Object</code> | <code>false</code>                          | Optional body |
+| params.method      | <code>String</code> | Optional method                             |               |
 
 ```javascript
-oneDriveAPI.items.customEndpoint({
-  accessToken: accessToken,
-  url: 'me/drive/special/cameraroll',
-  // method: 'GET'
-  // body: {}
-}).then(r => {
-  console.log(r)
-}).catch(e => {
-  console.log(e)
-})
+oneDriveAPI.items
+  .customEndpoint({
+    accessToken: accessToken,
+    url: "me/drive/special/cameraroll",
+    // method: 'GET'
+    // body: {}
+  })
+  .then((r) => {
+    console.log(r);
+  })
+  .catch((e) => {
+    console.log(e);
+  });
 ```
 
 ### items.sync
@@ -197,21 +198,22 @@ Sync changes
 
 **Returns**: <code>Promise\<Object></code> - Object represent the changes since last sync
 
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>Object</code> |  |
-| params.accessToken | <code>String</code> | OneDrive access token |
-| params.next | <code>String</code> | nextLink (or deltaLink returned from last session). |
+| Param              | Type                | Description                                         |
+| ------------------ | ------------------- | --------------------------------------------------- |
+| params             | <code>Object</code> |                                                     |
+| params.accessToken | <code>String</code> | OneDrive access token                               |
+| params.next        | <code>String</code> | nextLink (or deltaLink returned from last session). |
 
 ```javascript
-oneDriveAPI.items.sync({
-  accessToken: accessToken,
-  next: 'https://graph.microsoft.com/v1.0/me/drive/delta(token=1230919asd190410jlka)'
-}).then((item) => {
-  // console.log(item);
-  // returns body of https://docs.microsoft.com/nb-no/onedrive/developer/rest-api/api/driveitem_delta?view=odsp-graph-online#response
-})
+oneDriveAPI.items
+  .sync({
+    accessToken: accessToken,
+    next: "https://graph.microsoft.com/v1.0/me/drive/delta(token=1230919asd190410jlka)",
+  })
+  .then((item) => {
+    // console.log(item);
+    // returns body of https://docs.microsoft.com/nb-no/onedrive/developer/rest-api/api/driveitem_delta?view=odsp-graph-online#response
+  });
 ```
 
 ### items.getMetadata
@@ -220,23 +222,24 @@ Get items metadata (file or folder)
 
 **Returns**: <code>Promise\<Object></code> - Item's metadata
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>Object</code> |   |  |
-| params.accessToken | <code>String</code> |  | OneDrive access token |
-| params.itemId | <code>String</code> |  | Item id |
-| params.drive | <code>String</code> | `'me'` | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
-| params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
-
+| Param              | Type                | Default     | Description                                                                                     |
+| ------------------ | ------------------- | ----------- | ----------------------------------------------------------------------------------------------- |
+| params             | <code>Object</code> |             |                                                                                                 |
+| params.accessToken | <code>String</code> |             | OneDrive access token                                                                           |
+| params.itemId      | <code>String</code> |             | Item id                                                                                         |
+| params.drive       | <code>String</code> | `'me'`      | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId     | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
 
 ```javascript
-oneDriveAPI.items.getMetadata({
-  accessToken: accessToken,
-  itemId: createdFolder.id
-}).then((item) => {
-  // console.log(item);
-  // returns body of https://dev.onedrive.com/items/update.htm#response
-})
+oneDriveAPI.items
+  .getMetadata({
+    accessToken: accessToken,
+    itemId: createdFolder.id,
+  })
+  .then((item) => {
+    // console.log(item);
+    // returns body of https://dev.onedrive.com/items/update.htm#response
+  });
 ```
 
 ### items.listChildren
@@ -245,25 +248,26 @@ List childrens
 
 **Returns**: <code>Promise\<Object></code> - object of children items
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>Object</code> |  |  |
-| params.accessToken | <code>String</code> |  | OneDrive access token |
-| [params.itemId] | <code>String</code> | <code>root</code> | Item id |
-| params.drive | <code>String</code> | `'me'` | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
-| params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
-| params.query | <code>String</code> | `undefined` | OData system query options. |
-
+| Param              | Type                | Default           | Description                                                                                     |
+| ------------------ | ------------------- | ----------------- | ----------------------------------------------------------------------------------------------- |
+| params             | <code>Object</code> |                   |                                                                                                 |
+| params.accessToken | <code>String</code> |                   | OneDrive access token                                                                           |
+| [params.itemId]    | <code>String</code> | <code>root</code> | Item id                                                                                         |
+| params.drive       | <code>String</code> | `'me'`            | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId     | <code>String</code> | `undefined`       | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
+| params.query       | <code>String</code> | `undefined`       | OData system query options.                                                                     |
 
 ```javascript
-oneDriveAPI.items.listChildren({
-  accessToken: accessToken,
-  itemId: createdFolder.id,
-  query: '?$filter=createdDateTime le 2020-07-07T12:56:51.577Z'
-}).then((childrens) => {
-// console.log(childrens);
-// returns body of https://dev.onedrive.com/items/list.htm#response
-})
+oneDriveAPI.items
+  .listChildren({
+    accessToken: accessToken,
+    itemId: createdFolder.id,
+    query: "?$filter=createdDateTime le 2020-07-07T12:56:51.577Z",
+  })
+  .then((childrens) => {
+    // console.log(childrens);
+    // returns body of https://dev.onedrive.com/items/list.htm#response
+  });
 ```
 
 ### items.update
@@ -272,27 +276,28 @@ Update item metadata
 
 **Returns**: <code>Promise\<Object></code> - Item meta object
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>Object</code> |  |  |
-| params.accessToken | <code>String</code> |  | OneDrive access token |
-| params.itemId | <code>String</code> |  | Item id |
-| params.toUpdate | <code>Object</code> |  | Object to update |
-| params.drive | <code>String</code> | `'me'` | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
-| params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
-
+| Param              | Type                | Default     | Description                                                                                     |
+| ------------------ | ------------------- | ----------- | ----------------------------------------------------------------------------------------------- |
+| params             | <code>Object</code> |             |                                                                                                 |
+| params.accessToken | <code>String</code> |             | OneDrive access token                                                                           |
+| params.itemId      | <code>String</code> |             | Item id                                                                                         |
+| params.toUpdate    | <code>Object</code> |             | Object to update                                                                                |
+| params.drive       | <code>String</code> | `'me'`      | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId     | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
 
 ```javascript
-oneDriveAPI.items.update({
-  accessToken: accessToken,
-  itemId: createdFolder.id,
-  toUpdate: {
-        name: "newFolderName"
-      }
-}).then((item) => {
-// console.log(item);
-// returns body of https://dev.onedrive.com/items/update.htm#response
-})
+oneDriveAPI.items
+  .update({
+    accessToken: accessToken,
+    itemId: createdFolder.id,
+    toUpdate: {
+      name: "newFolderName",
+    },
+  })
+  .then((item) => {
+    // console.log(item);
+    // returns body of https://dev.onedrive.com/items/update.htm#response
+  });
 ```
 
 ### items.uploadSimple
@@ -301,27 +306,28 @@ Create file with simple upload
 
 **Returns**: <code>Promise\<Object></code> - Item
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>Object</code> |  |  |
-| params.accessToken | <code>String</code> |  | OneDrive access token |
-| params.filename | <code>String</code> |  | File name |
-| [params.parentId] | <code>String</code> | <code>root</code> | Parent id |
-| [params.parentPath] | <code>String</code> |  | Parent path (if parentPath is defined, than parentId is ignored) |
-| params.readableStream | <code>Object</code> |  | Readable Stream with file's content |
-| params.drive | <code>String</code> | `'me'` | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
-| params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
-
+| Param                 | Type                | Default           | Description                                                                                     |
+| --------------------- | ------------------- | ----------------- | ----------------------------------------------------------------------------------------------- |
+| params                | <code>Object</code> |                   |                                                                                                 |
+| params.accessToken    | <code>String</code> |                   | OneDrive access token                                                                           |
+| params.filename       | <code>String</code> |                   | File name                                                                                       |
+| [params.parentId]     | <code>String</code> | <code>root</code> | Parent id                                                                                       |
+| [params.parentPath]   | <code>String</code> |                   | Parent path (if parentPath is defined, than parentId is ignored)                                |
+| params.readableStream | <code>Object</code> |                   | Readable Stream with file's content                                                             |
+| params.drive          | <code>String</code> | `'me'`            | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId        | <code>String</code> | `undefined`       | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
 
 ```javascript
-oneDriveAPI.items.uploadSimple({
-  accessToken: accessToken,
-  filename: filename,
-  readableStream: readableStream
-}).then((item) => {
-// console.log(item);
-// returns body of https://dev.onedrive.com/items/upload_put.htm#response
-})
+oneDriveAPI.items
+  .uploadSimple({
+    accessToken: accessToken,
+    filename: filename,
+    readableStream: readableStream,
+  })
+  .then((item) => {
+    // console.log(item);
+    // returns body of https://dev.onedrive.com/items/upload_put.htm#response
+  });
 ```
 
 ### items.uploadSession
@@ -330,33 +336,37 @@ Create a file with session upload. Use this for the files over 4MB. This is a sy
 
 **Returns**: <code>Promise\<Object></code> - Item
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>Object</code> |  |  |
-| params.accessToken | <code>String</code> |  | OneDrive access token |
-| params.filename | <code>String</code> |  | File name |
-| params.fileSize | <code>Number</code> |  | Size of the file |
-| [params.parentId] | <code>String</code> | <code>root</code> | Parent id |
-| [params.parentPath] | <code>String</code> |  | Parent path (if parentPath is defined, than parentId is ignored) |
-| params.readableStream | <code>Object</code> |  | Readable Stream with file's content |
-| params.drive | <code>string</code> | `'me'` | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
-| params.driveId | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set. |
-| [params.chunksToUpload] | <code>Number</code> | <code>20</code> | Chunks to upload per request. More chunks per request requires more RAM |
-| process | <code>function</code> |  | A callback emit a variable represent the bytes that were transferred |
-
+| Param                   | Type                  | Default           | Description                                                                                     |
+| ----------------------- | --------------------- | ----------------- | ----------------------------------------------------------------------------------------------- |
+| params                  | <code>Object</code>   |                   |                                                                                                 |
+| params.accessToken      | <code>String</code>   |                   | OneDrive access token                                                                           |
+| params.filename         | <code>String</code>   |                   | File name                                                                                       |
+| params.fileSize         | <code>Number</code>   |                   | Size of the file                                                                                |
+| [params.parentId]       | <code>String</code>   | <code>root</code> | Parent id                                                                                       |
+| [params.parentPath]     | <code>String</code>   |                   | Parent path (if parentPath is defined, than parentId is ignored)                                |
+| params.readableStream   | <code>Object</code>   |                   | Readable Stream with file's content                                                             |
+| params.drive            | <code>string</code>   | `'me'`            | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId          | <code>String</code>   | `undefined`       | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
+| [params.chunksToUpload] | <code>Number</code>   | <code>20</code>   | Chunks to upload per request. More chunks per request requires more RAM                         |
+| process                 | <code>function</code> |                   | A callback emit a variable represent the bytes that were transferred                            |
 
 ```javascript
-oneDriveAPI.items.uploadSession({
-  accessToken: accessToken,
-  filename: filename,
-  fileSize: fileSize,
-  readableStream: readableStream
-}, (bytesUploaded) => {
-  console.log(bytesUploaded)
-}).then((item) => {
-// console.log(item);
-// returns body of https://docs.microsoft.com/en-us/onedrive/developer/rest-api/api/driveitem_createuploadsession?view=odsp-graph-online#http-response
-})
+oneDriveAPI.items
+  .uploadSession(
+    {
+      accessToken: accessToken,
+      filename: filename,
+      fileSize: fileSize,
+      readableStream: readableStream,
+    },
+    (bytesUploaded) => {
+      console.log(bytesUploaded);
+    },
+  )
+  .then((item) => {
+    // console.log(item);
+    // returns body of https://docs.microsoft.com/en-us/onedrive/developer/rest-api/api/driveitem_createuploadsession?view=odsp-graph-online#http-response
+  });
 ```
 
 ## [Changelog](./CHANGELOG.md)
