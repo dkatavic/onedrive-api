@@ -11,9 +11,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
       - run:
           name: configure NPM registry
@@ -26,6 +26,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      # Ensure Prettier + ESLint has been run on all JS files
+      - run: npx prettier "./**/*.{js}" && npx eslint "./**/*.{js}"
+
       # run tests!
       - run: npm test
 
@@ -35,4 +38,3 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               npm publish && npm run release:tag;
             fi
-

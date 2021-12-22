@@ -91,7 +91,6 @@ describe("uploadSimple", function () {
   });
 });
 
-
 describe("uploadSimple Handle special characters", function () {
   let filename, readableStream, fileContent, createdFile;
 
@@ -112,7 +111,7 @@ describe("uploadSimple Handle special characters", function () {
   });
 
   it("Should handle special OData '(' charachter", function (done) {
-    filename = filename + 'testing(1).ico';
+    filename = filename + "testing(1).ico";
     oneDrive.items
       .uploadSimple({
         accessToken: accessToken,
