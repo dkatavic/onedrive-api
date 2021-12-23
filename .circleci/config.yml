@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:12.19-buster
+      - image: circleci/node:14-buster
     working_directory: ~/onedrive-api
 
     steps:
@@ -27,7 +27,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # Ensure Prettier + ESLint has been run on all JS files
-      - run: npx prettier "./**/*.{js}" && npx eslint "./**/*.{js}"
+      - run: npm run lint
 
       # run tests!
       - run: npm test
