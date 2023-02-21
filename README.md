@@ -114,12 +114,13 @@ Download item content
 **Returns**: <code>ReadableStream</code> - Readable stream with item's content
 
 | Param              | Type                | Default     | Description                                                                                     |
-| ------------------ | ------------------- | ----------- | ----------------------------------------------------------------------------------------------- |
+|--------------------| ------------------- | ----------- |-------------------------------------------------------------------------------------------------|
 | params             | <code>Object</code> |             |                                                                                                 |
 | params.accessToken | <code>String</code> |             | OneDrive access token                                                                           |
 | params.itemId      | <code>String</code> |             | item id                                                                                         |
 | params.drive       | <code>String</code> | `'me'`      | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
 | params.driveId     | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
+| params.format      | <code>String</code> | `undefined` | Converts the content to specified format. Format options: `'glb'`/`'html'`/`'jpg'`/`'pdf'`      |
 
 ```javascript
 const fileStream = oneDriveAPI.items.download({
