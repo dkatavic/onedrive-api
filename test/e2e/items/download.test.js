@@ -36,9 +36,9 @@ describe("download", function () {
       .catch(errorHandler(done));
   });
 
-  it("Should download Simple file using Stream", function (done) {
+  it("Should download Simple file using Stream", async function () {
     let partialString = "";
-    const fileStream = oneDrive.items.download({
+    const fileStream = await oneDrive.items.download({
       accessToken: accessToken,
       itemId: createdFile.id,
     });
@@ -49,11 +49,10 @@ describe("download", function () {
 
     fileStream.on("end", function () {
       expect(partialString).to.be.equal(fileContent);
-      done();
     });
 
     fileStream.on("error", function (err) {
-      errorHandler(done)(err);
+      errorHandler()(err);
     });
   });
 });
