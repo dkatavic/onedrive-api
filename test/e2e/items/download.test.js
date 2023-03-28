@@ -56,4 +56,25 @@ describe("download", function () {
       errorHandler(done)(err);
     });
   });
+
+  it("Should download Simple file via path", function (done) {
+    let partialString = "";
+    const fileStream = oneDrive.items.download({
+      accessToken: accessToken,
+      itemPath: filename,
+    });
+
+    fileStream.on("data", function (data) {
+      partialString += data.toString();
+    });
+
+    fileStream.on("end", function () {
+      expect(partialString).to.be.equal(fileContent);
+      done();
+    });
+
+    fileStream.on("error", function (err) {
+      errorHandler(done)(err);
+    });
+  })
 });
