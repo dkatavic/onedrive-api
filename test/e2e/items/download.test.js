@@ -38,22 +38,28 @@ describe("download", function () {
 
   it("Should download Simple file using Stream", function (done) {
     let partialString = "";
-    const fileStream = oneDrive.items.download({
+    const promise = oneDrive.items.download({
       accessToken: accessToken,
       itemId: createdFile.id,
     });
 
-    fileStream.on("data", function (data) {
-      partialString += data.toString();
-    });
+    promise
+    .then((fileStream) => {
+      fileStream.on("data", function (data) {
+        partialString += data.toString();
+      });
 
-    fileStream.on("end", function () {
-      expect(partialString).to.be.equal(fileContent);
-      done();
-    });
+      fileStream.on("end", function () {
+        expect(partialString).to.be.equal(fileContent);
+        done();
+      });
 
-    fileStream.on("error", function (err) {
-      errorHandler(done)(err);
+      fileStream.on("error", function (err) {
+        errorHandler(done)(err);
+      });
+    })
+    .catch((error) => {
+      errorHandler(done)(error);
     });
   });
 });

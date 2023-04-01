@@ -1,6 +1,6 @@
 {
   "name": "onedrive-api",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "OneDrive module for communicating with oneDrive API. Built using functional programming pattern",
   "main": "lib/index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "got": "11.8.3",
+    "got": "12.6.0",
     "is-empty-object": "1.1.1"
   },
   "devDependencies": {
