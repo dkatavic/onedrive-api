@@ -57,7 +57,7 @@ Create Folder
 **Returns**: <code>Promise\<Object></code> - folder meta object
 
 | Param               | Type                | Default           | Description                                                                                     |
-|---------------------| ------------------- |-------------------|-------------------------------------------------------------------------------------------------|
+| ------------------- | ------------------- | ----------------- | ----------------------------------------------------------------------------------------------- |
 | params              | <code>Object</code> |                   |                                                                                                 |
 | params.accessToken  | <code>String</code> |                   | OneDrive access token                                                                           |
 | [params.rootItemId] | <code>String</code> | <code>root</code> | Item id                                                                                         |
@@ -86,7 +86,7 @@ Delete item (file or folder)
 **Returns**: <code>Promise\<void></code> - The promise will throw [HttpError](https://www.npmjs.com/package/got#errors) if the delete API fail.
 
 | Param              | Type                | Default     | Description                                                                                     |
-| ------------------ | ------------------- | ----------- |-------------------------------------------------------------------------------------------------|
+| ------------------ | ------------------- | ----------- | ----------------------------------------------------------------------------------------------- |
 | params             | <code>Object</code> |             |                                                                                                 |
 | params.accessToken | <code>String</code> |             | OneDrive access token                                                                           |
 | params.itemId      | <code>String</code> |             | Item id                                                                                         |
@@ -142,7 +142,7 @@ If only the `itemId` is provided, the function will try to get the download URL 
 **Returns**: <code>Promise\<ReadableStream></code> - A promise with the result is a `Readable stream` with partial item's content
 
 | Param                   | Type                | Default     | Description                                                                                                                                                                             |
-|-------------------------| ------------------- | ----------- |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ----------------------- | ------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | params                  | <code>Object</code> |             |                                                                                                                                                                                         |
 | params.accessToken      | <code>String</code> |             | OneDrive access token                                                                                                                                                                   |
 | params.graphDownloadURL | <code>String</code> |             | `@microsoft.graph.downloadUrl` of the item                                                                                                                                              |
@@ -255,7 +255,7 @@ List childrens
 **Returns**: <code>Promise\<Object></code> - object of children items
 
 | Param              | Type                | Default           | Description                                                                                     |
-| ------------------ | ------------------- |-------------------|-------------------------------------------------------------------------------------------------|
+| ------------------ | ------------------- | ----------------- | ----------------------------------------------------------------------------------------------- |
 | params             | <code>Object</code> |                   |                                                                                                 |
 | params.accessToken | <code>String</code> |                   | OneDrive access token                                                                           |
 | [params.itemId]    | <code>String</code> | <code>root</code> | Item id                                                                                         |
