@@ -111,7 +111,7 @@ oneDriveAPI.items
 
 Download item content
 
-**Returns**: <code>ReadableStream</code> - Readable stream with item's content
+**Returns**: <code>Promise<ReadableStream></code> - A promise with the result being a `Readable stream` with item's content
 
 | Param              | Type                | Default     | Description                                                                                     |
 |--------------------| ------------------- | ----------- |-------------------------------------------------------------------------------------------------|
@@ -123,11 +123,11 @@ Download item content
 | params.format      | <code>String</code> | `undefined` | Converts the content to specified format. Format options: `'glb'`/`'html'`/`'jpg'`/`'pdf'`      |
 
 ```javascript
-const fileStream = oneDriveAPI.items.download({
+const promise = oneDriveAPI.items.download({
   accessToken: accessToken,
   itemId: createdFolder.id,
 });
-fileStream.pipe(SomeWritableStream);
+promise.then((fileStream) => fileStream.pipe(SomeWritableStream));
 ```
 
 ### items.partialDownload
