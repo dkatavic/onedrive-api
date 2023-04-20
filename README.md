@@ -61,6 +61,7 @@ Create Folder
 | params              | <code>Object</code> |                   |                                                                                                 |
 | params.accessToken  | <code>String</code> |                   | OneDrive access token                                                                           |
 | [params.rootItemId] | <code>String</code> | <code>root</code> | Item id                                                                                         |
+| params.itemPath     | <code>String</code> |                   | Item path (ignored if `itemId` is set)                                                          |
 | params.name         | <code>String</code> |                   | New folder name                                                                                 |
 | params.drive        | <code>String</code> | `'me'`            | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
 | params.driveId      | <code>String</code> | `undefined`       | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
@@ -89,6 +90,7 @@ Delete item (file or folder)
 | params             | <code>Object</code> |             |                                                                                                 |
 | params.accessToken | <code>String</code> |             | OneDrive access token                                                                           |
 | params.itemId      | <code>String</code> |             | Item id                                                                                         |
+| params.itemPath    | <code>String</code> |             | Item path (ignored if `itemId` is set)                                                          |
 | params.drive       | <code>String</code> | `'me'`      | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
 | params.driveId     | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
 
@@ -118,6 +120,7 @@ Download item content
 | params             | <code>Object</code> |             |                                                                                                 |
 | params.accessToken | <code>String</code> |             | OneDrive access token                                                                           |
 | params.itemId      | <code>String</code> |             | item id                                                                                         |
+| params.itemPath    | <code>String</code> |             | Item path (ignored if `itemId` is set)                                                          |
 | params.drive       | <code>String</code> | `'me'`      | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
 | params.driveId     | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
 | params.format      | <code>String</code> | `undefined` | Converts the content to specified format. Format options: `'glb'`/`'html'`/`'jpg'`/`'pdf'`      |
@@ -125,7 +128,7 @@ Download item content
 ```javascript
 const promise = oneDriveAPI.items.download({
   accessToken: accessToken,
-  itemId: createdFolder.id,
+  itemPath: 'path/to/file/file.pdf',
 });
 promise.then((fileStream) => fileStream.pipe(SomeWritableStream));
 ```
@@ -144,6 +147,7 @@ If only the `itemId` is provided, the function will try to get the download URL 
 | params.accessToken      | <code>String</code> |             | OneDrive access token                                                                                                                                                                   |
 | params.graphDownloadURL | <code>String</code> |             | `@microsoft.graph.downloadUrl` of the item                                                                                                                                              |
 | params.itemId           | <code>String</code> |             | item id. This parameter will be skipped if `graphDownloadURL` is provided.                                                                                                              |
+| params.itemPath         | <code>String</code> |             | Item path (ignored if `itemId` or `graphDownloadURL` is set)                                                                                                                            |
 | params.bytesFrom        | <code>Number</code> | `0`         | Starting download byte.                                                                                                                                                                 |
 | params.bytesTo          | <code>Number</code> |             | Ending byte to download. Must be set                                                                                                                                                    |
 | params.drive            | <code>String</code> | `'me'`      | Only be used if only `params.itemId` is set and `params.graphDownloadURL` is undefined. If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
@@ -227,6 +231,7 @@ Get items metadata (file or folder)
 | ------------------ | ------------------- | ----------- | ----------------------------------------------------------------------------------------------- |
 | params             | <code>Object</code> |             |                                                                                                 |
 | params.accessToken | <code>String</code> |             | OneDrive access token                                                                           |
+| params.itemPath    | <code>String</code> |             | Item path (ignored if `itemId` is set)                                                          |
 | params.itemId      | <code>String</code> |             | Item id                                                                                         |
 | params.drive       | <code>String</code> | `'me'`      | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
 | params.driveId     | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
@@ -254,6 +259,7 @@ List childrens
 | params             | <code>Object</code> |                   |                                                                                                 |
 | params.accessToken | <code>String</code> |                   | OneDrive access token                                                                           |
 | [params.itemId]    | <code>String</code> | <code>root</code> | Item id                                                                                         |
+| params.itemPath    | <code>String</code> |                   | Item path (ignored if `itemId` is set)                                                          |
 | params.drive       | <code>String</code> | `'me'`            | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
 | params.driveId     | <code>String</code> | `undefined`       | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
 | params.query       | <code>String</code> | `undefined`       | OData system query options.                                                                     |
@@ -282,6 +288,7 @@ Update item metadata
 | params             | <code>Object</code> |             |                                                                                                 |
 | params.accessToken | <code>String</code> |             | OneDrive access token                                                                           |
 | params.itemId      | <code>String</code> |             | Item id                                                                                         |
+| params.itemPath    | <code>String</code> |             | Item path (ignored if `itemId` is set)                                                          |
 | params.toUpdate    | <code>Object</code> |             | Object to update                                                                                |
 | params.drive       | <code>String</code> | `'me'`      | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
 | params.driveId     | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
