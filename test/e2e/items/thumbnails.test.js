@@ -1,6 +1,6 @@
 const faker = require("faker");
 
-describe("preview", function () {
+describe("thumbnails", function () {
   let filename, createdFile;
 
   before(function (done) {
@@ -8,7 +8,7 @@ describe("preview", function () {
     const path = require("path")
     const examplePdfPath = path.join(__dirname, "../../example-data/pdf_file.pdf")
 
-    filename = "test-preview-" + faker.random.word() + ".pdf";
+    filename = "test-thumbnails-" + faker.random.word() + ".pdf";
 
     oneDrive.items
       .uploadSimple({
@@ -35,19 +35,17 @@ describe("preview", function () {
       .catch(errorHandler(done));
   });
 
-  it("Should generate preview link for pdf file", function (done) {
+  it("Should generate thumbnails for pdf file", function (done) {
     oneDrive.items
-      .preview({
+      .thumbnails({
         accessToken: accessToken,
-        itemId: createdFile.id,
-        body: {
-          zoom: 0.75
-        }
+        itemId: createdFile.id
       })
       .then((response) => {
         expect(response).to.be.a("object");
-        expect(response).to.have.property("getUrl")
-        expect(response.getUrl).to.be.a("string")
+        expect(response).to.have.property("value")
+        expect(response["value"]).to.be.a("array").and.to.have.length.greaterThan(0)
+        expect(response["value"][0]).to.have.property("small")
         done();
       })
       .catch(errorHandler(done));
