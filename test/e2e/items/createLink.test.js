@@ -1,6 +1,6 @@
 const faker = require("faker");
 
-describe("preview", function () {
+describe("createLink", function () {
   let filename, createdFile;
 
   before(function (done) {
@@ -8,7 +8,7 @@ describe("preview", function () {
     const path = require("path")
     const examplePdfPath = path.join(__dirname, "../../example-data/pdf_file.pdf")
 
-    filename = "test-preview-" + faker.random.word();
+    filename = "test-createLink-" + faker.random.word();
 
     oneDrive.items
       .uploadSimple({
@@ -35,19 +35,21 @@ describe("preview", function () {
       .catch(errorHandler(done));
   });
 
-  it("Should generate preview link for pdf file", function (done) {
+  it("Should generate viewable sharing link for pdf file", function (done) {
     oneDrive.items
-      .preview({
+      .createLink({
         accessToken: accessToken,
         itemId: createdFile.id,
+        type: "view",
         body: {
-          zoom: 0.75
+          password: "123"
         }
       })
       .then((response) => {
         expect(response).to.be.a("object");
-        expect(response).to.have.property("getUrl")
-        expect(response.getUrl).to.be.a("string")
+        expect(response).to.have.property("link")
+        expect(response["link"]).to.be.a("object")
+        expect(response["link"]["type"]).to.equal("view")
         done();
       })
       .catch(errorHandler(done));
