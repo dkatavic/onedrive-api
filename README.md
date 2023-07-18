@@ -15,14 +15,17 @@ npm install onedrive-api
 ### Items
 
 - [createFolder](#itemscreatefolder)
+- [createLink](#itemscreatelink)
+- [customEndpoint](#itemscustomendpoint)
 - [delete](#itemsdelete)
 - [download](#itemsdownload)
 - [partialDownload](#itemspartialdownload)
 - [getMetadata](#itemsgetmetadata)
 - [listChildren](#itemslistchildren)
-- [update](#itemsupdate)
+- [preview](#itemspreview)
 - [sync](#itemssync)
-- [customEndpoint](#itemscustomendpoint)
+- [thumbnails](#itemsthumbnails)
+- [update](#itemsupdate)
 - [uploadSimple](#itemsuploadsimple)
 - [uploadSession](#itemsuploadsession)
 
@@ -76,6 +79,68 @@ oneDriveAPI.items
   .then((item) => {
     // console.log(item)
     // returns body of https://dev.onedrive.com/items/create.htm#response
+  });
+```
+
+### items.createLink
+
+Get long-lived embeddable sharing-link
+
+**Returns**: <code>Promise\<Object></code> - Items sharing link object
+
+| Param              | Type                | Default     | Description                                                                                     |
+|--------------------|---------------------|-------------|-------------------------------------------------------------------------------------------------|
+| params             | <code>Object</code> |             |                                                                                                 |
+| params.accessToken | <code>String</code> |             | OneDrive access token                                                                           |
+| params.itemPath    | <code>String</code> |             | Item path (ignored if `itemId` is set)                                                          |
+| params.itemId      | <code>String</code> |             | Item id                                                                                         |
+| params.drive       | <code>String</code> | `'me'`      | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId     | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
+| params.type        | <code>String</code> | `embed`     | The type of sharing link. Either `view`, `edit` or `embed`.                                     |
+| params.body        | <code>Object</code> |             | Request body                                                                                    |
+
+```javascript
+oneDriveAPI.items
+  .createLink({
+    accessToken: accessToken,
+    itemId: createdFile.id,
+    type: "view",
+    body: {
+        password: "123"
+    }
+  })
+  .then((linkObject) => {
+    // console.log(linkObject);
+  });
+```
+
+### items.customEndpoint
+
+Call custom endpoint with JSON response.
+
+**Returns**: <code>Promise\<Object></code> - JSON object.
+
+| Param              | Type                | Description                                 |               |
+| ------------------ | ------------------- | ------------------------------------------- | ------------- |
+| params             | <code>Object</code> |                                             |               |
+| params.accessToken | <code>String</code> | OneDrive access token                       |               |
+| params.url         | <code>String</code> | Endpoint url. Ex. 'groups/{groupId}/drives' |               |
+| params.body        | <code>Object</code> | <code>false</code>                          | Optional body |
+| params.method      | <code>String</code> | Optional method                             |               |
+
+```javascript
+oneDriveAPI.items
+  .customEndpoint({
+    accessToken: accessToken,
+    url: "me/drive/special/cameraroll",
+    // method: 'GET'
+    // body: {}
+  })
+  .then((r) => {
+    console.log(r);
+  })
+  .catch((e) => {
+    console.log(e);
   });
 ```
 
@@ -167,59 +232,6 @@ const partialPromise = oneDriveAPI.items.partialDownload({
 partialPromise.then((fileStream) => fileStream.pipe(SomeWritableStream));
 ```
 
-### items.customEndpoint
-
-Call custom endpoint with JSON response.
-
-**Returns**: <code>Promise\<Object></code> - JSON object.
-
-| Param              | Type                | Description                                 |               |
-| ------------------ | ------------------- | ------------------------------------------- | ------------- |
-| params             | <code>Object</code> |                                             |               |
-| params.accessToken | <code>String</code> | OneDrive access token                       |               |
-| params.url         | <code>String</code> | Endpoint url. Ex. 'groups/{groupId}/drives' |               |
-| params.body        | <code>Object</code> | <code>false</code>                          | Optional body |
-| params.method      | <code>String</code> | Optional method                             |               |
-
-```javascript
-oneDriveAPI.items
-  .customEndpoint({
-    accessToken: accessToken,
-    url: "me/drive/special/cameraroll",
-    // method: 'GET'
-    // body: {}
-  })
-  .then((r) => {
-    console.log(r);
-  })
-  .catch((e) => {
-    console.log(e);
-  });
-```
-
-### items.sync
-
-Sync changes
-
-**Returns**: <code>Promise\<Object></code> - Object represent the changes since last sync
-
-| Param              | Type                | Description                                         |
-| ------------------ | ------------------- | --------------------------------------------------- |
-| params             | <code>Object</code> |                                                     |
-| params.accessToken | <code>String</code> | OneDrive access token                               |
-| params.next        | <code>String</code> | nextLink (or deltaLink returned from last session). |
-
-```javascript
-oneDriveAPI.items
-  .sync({
-    accessToken: accessToken,
-    next: "https://graph.microsoft.com/v1.0/me/drive/delta(token=1230919asd190410jlka)",
-  })
-  .then((item) => {
-    // console.log(item);
-    // returns body of https://docs.microsoft.com/nb-no/onedrive/developer/rest-api/api/driveitem_delta?view=odsp-graph-online#response
-  });
-```
 
 ### items.getMetadata
 
@@ -274,6 +286,87 @@ oneDriveAPI.items
   .then((childrens) => {
     // console.log(childrens);
     // returns body of https://dev.onedrive.com/items/list.htm#response
+  });
+```
+
+### items.preview
+
+Create short-lived embeddable preview url
+
+**Returns**: <code>Promise\<Object></code> - object with embeddable url
+
+| Param              | Type                | Default     | Description                                                                                     |
+|--------------------|---------------------|-------------|-------------------------------------------------------------------------------------------------|
+| params             | <code>Object</code> |             |                                                                                                 |
+| params.accessToken | <code>String</code> |             | OneDrive access token                                                                           |
+| params.itemPath    | <code>String</code> |             | Item path (ignored if `itemId` is set)                                                          |
+| params.itemId      | <code>String</code> |             | Item id                                                                                         |
+| params.drive       | <code>String</code> | `'me'`      | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId     | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
+| params.body        | <code>Object</code> |             | Request body                                                                                    |
+
+```javascript
+oneDriveAPI.items
+  .preview({
+    accessToken: accessToken,
+    itemId: createdFile.id,
+    body: {
+        zoom: 1
+    }
+  })
+  .then((urlObject) => {
+    // console.log(urlObject);
+  });
+```
+
+### items.sync
+
+Sync changes
+
+**Returns**: <code>Promise\<Object></code> - Object represent the changes since last sync
+
+| Param              | Type                | Description                                         |
+| ------------------ | ------------------- | --------------------------------------------------- |
+| params             | <code>Object</code> |                                                     |
+| params.accessToken | <code>String</code> | OneDrive access token                               |
+| params.next        | <code>String</code> | nextLink (or deltaLink returned from last session). |
+
+```javascript
+oneDriveAPI.items
+  .sync({
+    accessToken: accessToken,
+    next: "https://graph.microsoft.com/v1.0/me/drive/delta(token=1230919asd190410jlka)",
+  })
+  .then((item) => {
+    // console.log(item);
+    // returns body of https://docs.microsoft.com/nb-no/onedrive/developer/rest-api/api/driveitem_delta?view=odsp-graph-online#response
+  });
+```
+
+### items.thumbnails
+
+Retrieve thumbnails for an item
+
+**Returns**: <code>Promise\<Object></code> - object with thumbnail urls
+
+| Param                  | Type                | Default     | Description                                                                                     |
+|------------------------|---------------------|-------------|-------------------------------------------------------------------------------------------------|
+| params                 | <code>Object</code> |             |                                                                                                 |
+| params.accessToken     | <code>String</code> |             | OneDrive access token                                                                           |
+| params.itemPath        | <code>String</code> |             | Item path (ignored if `itemId` is set)                                                          |
+| params.itemId          | <code>String</code> |             | Item id                                                                                         |
+| params.drive           | <code>String</code> | `'me'`      | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId         | <code>String</code> | `undefined` | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
+| params.queryParameters | <code>String</code> |             | OData query parameters                                                                          |
+
+```javascript
+oneDriveAPI.items
+  .preview({
+    accessToken: accessToken,
+    itemId: createdFile.id
+  })
+  .then((thumbnailsObject) => {
+    // console.log(thumbnailsObject);
   });
 ```
 
