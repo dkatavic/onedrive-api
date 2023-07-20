@@ -8,5 +8,6 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 13,
   },
+  ignorePatterns: ["lib/index.d.ts"],
   rules: {},
 };
