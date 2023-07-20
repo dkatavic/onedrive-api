@@ -34,7 +34,7 @@ npm install onedrive-api
 ### Require module
 
 ```javascript
-const oneDriveAPI = require("onedrive-api");
+import oneDriveAPI from "onedrive-api";
 ```
 
 ```javascript
