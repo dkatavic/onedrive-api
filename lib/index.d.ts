@@ -53,13 +53,13 @@ declare namespace oneDriveAPI {
   } & AccessToken & DriveSpecification & (ItemSpecifiation | {graphDownloadURL: string});
   type PartialDownloadFn = (params: PartialDownloadParams) => Promise<NodeJS.ReadableStream>
 
-  type SyncParams = {
-    next?: string
-  } & AccessToken & DriveSpecification
-  type SyncFn = (params: SyncParams) => Promise<
-    {"@odata.nextLink": string, value: DriveItem[]} |
-    {"@odata.deltaLink": string, value: DriveItem[]}>;
-
+  type SyncDefaultParams = AccessToken & DriveSpecification & ItemSpecifiation
+  type SyncNextParams = {
+    next: string
+  } & AccessToken
+  type SyncFn = (params: SyncDefaultParams | SyncNextParams) => Promise<
+    ({"@odata.nextLink": string, value: DriveItem[]} |
+    {"@odata.deltaLink": string, value: DriveItem[]})>;
 
   type HTTPMethods = "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "CONNECT" | "OPTIONS" | "TRACE"
   type CustomEndpointParams = {
