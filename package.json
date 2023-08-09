@@ -1,6 +1,6 @@
 {
   "name": "onedrive-api",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "OneDrive module for communicating with oneDrive API. Built using functional programming pattern",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -25,10 +25,10 @@
   "license": "MIT",
   "dependencies": {
     "got": "12.6.0",
-    "is-empty-object": "1.1.1"
+    "is-empty-object": "1.1.1",
+    "@microsoft/microsoft-graph-types": "^2.35.0"
   },
   "devDependencies": {
-    "@microsoft/microsoft-graph-types": "^2.35.0",
     "@types/node": "^20.4.2",
     "chai": "4.2.0",
     "eslint": "^8.5.0",
