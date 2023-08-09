@@ -270,15 +270,15 @@ List childrens
 
 **Returns**: <code>Promise\<Object></code> - object of children items
 
-| Param              | Type                | Default           | Description                                                                                     |
-| ------------------ | ------------------- | ----------------- | ----------------------------------------------------------------------------------------------- |
-| params             | <code>Object</code> |                   |                                                                                                 |
-| params.accessToken | <code>String</code> |                   | OneDrive access token                                                                           |
-| [params.itemId]    | <code>String</code> | <code>root</code> | Item id                                                                                         |
-| params.itemPath    | <code>String</code> |                   | Item path (ignored if `itemId` is set)                                                          |
-| params.drive       | <code>String</code> | `'me'`            | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
-| params.driveId     | <code>String</code> | `undefined`       | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
-| params.query       | <code>String</code> | `undefined`       | OData system query options.                                                                     |
+| Param                  | Type                | Default           | Description                                                                                     |
+|------------------------| ------------------- | ----------------- | ----------------------------------------------------------------------------------------------- |
+| params                 | <code>Object</code> |                   |                                                                                                 |
+| params.accessToken     | <code>String</code> |                   | OneDrive access token                                                                           |
+| [params.itemId]        | <code>String</code> | <code>root</code> | Item id                                                                                         |
+| params.itemPath        | <code>String</code> |                   | Item path (ignored if `itemId` is set)                                                          |
+| params.drive           | <code>String</code> | `'me'`            | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set. |
+| params.driveId         | <code>String</code> | `undefined`       | The id of the drive that was shared to you. Must be set if `params.drive` is set.               |
+| params.queryParameters | <code>String</code> | `undefined`       | OData system query options.                                                                     |
 
 ```javascript
 oneDriveAPI.items
