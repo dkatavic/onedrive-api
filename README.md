@@ -329,11 +329,15 @@ Sync changes
 
 **Returns**: <code>Promise\<Object></code> - Object represent the changes since last sync
 
-| Param              | Type                | Description                                         |
-| ------------------ | ------------------- | --------------------------------------------------- |
-| params             | <code>Object</code> |                                                     |
-| params.accessToken | <code>String</code> | OneDrive access token                               |
-| params.next        | <code>String</code> | nextLink (or deltaLink returned from last session). |
+| Param              | Type                | Description                                                                                                     |
+|--------------------| ------------------- |-----------------------------------------------------------------------------------------------------------------|
+| params             | <code>Object</code> |                                                                                                                 |
+| params.accessToken | <code>String</code> | OneDrive access token                                                                                           |
+| params.itemId      | <code>String</code> | Item id                                                                                                         |
+| params.itemPath    | <code>String</code> | Item path (ignored if `itemId` is set)                                                                          |
+| params.drive       | <code>String</code> | If it's set to be either `'user'`/`'drive'`/`'group'`/`'site'`, `params.driveId` has to be set.                 |
+| params.driveId     | <code>String</code> | The id of the drive that was shared to you. Must be set if `params.drive` is set.                               |
+| params.next        | <code>String</code> | nextLink (or deltaLink returned from last session). All other params (expect `accessToken`) are ignored if set. |
 
 ```javascript
 oneDriveAPI.items
